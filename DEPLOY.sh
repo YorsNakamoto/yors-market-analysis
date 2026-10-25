@@ -1,45 +1,63 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-#  DEPLOY OTOMATIS — Yors Market Analysis v5 → GitHub Pages
-#  Jalankan:  bash DEPLOY.sh
-#  Butuh login GitHub sekali (kode akan muncul di layar).
+#  🚀 DEPLOY SATU PERINTAH — Yors Market Analysis v5 → GitHub Pages
+#
+#  Cara pakai (di Terminal Mac):
+#      cd "/Users/nab/Documents/TRADING TOOLS/yors-web"
+#      bash DEPLOY.sh
+#
+#  Yang terjadi:
+#   1. Login GitHub (SEKALI saja) — kode akan muncul di Terminal,
+#      browser terbuka otomatis → masukkan kode → Authorize.
+#   2. Repo dibuat otomatis: yors-market-analysis (public)
+#   3. File di-push, GitHub Pages diaktifkan.
+#   4. Website online di:  https://<username>.github.io/yors-market-analysis/
 # ═══════════════════════════════════════════════════════════════
 set -e
-REPO_NAME="yors-market-analysis"
+export PATH="$HOME/bin:$PATH"
+GH="$(command -v gh || echo "$HOME/bin/gh")"
 DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO="yors-market-analysis"
+
+echo "═══ Yors Market Analysis v5 — Deploy ═══"
+
+if [ ! -x "$GH" ]; then
+  echo "❌ gh CLI tidak ditemukan. Install: brew install gh  (atau unduh dari github.com/cli/cli)"
+  exit 1
+fi
 
 echo "── 1/5 Cek login GitHub ──"
-if ! gh auth status >/dev/null 2>&1; then
-  echo "Butuh login GitHub (sekali saja)."
-  gh auth login --hostname github.com --git-protocol https --web
+if ! "$GH" auth status >/dev/null 2>&1; then
+  echo "→ Butuh login GitHub (sekali saja). Ikuti instruksi di layar…"
+  "$GH" auth login --hostname github.com --git-protocol https --web
 fi
-GH_USER=$(gh api user --jq .login)
+GH_USER=$("$GH" api user --jq .login)
 echo "✅ Login sebagai: $GH_USER"
 
-echo "── 2/5 Buat repo (bila belum ada) ──"
-if ! gh repo view "$GH_USER/$REPO_NAME" >/dev/null 2>&1; then
-  gh repo create "$REPO_NAME" --public --description "📊 Yors Market Analysis v5 — XAU/USD trading analysis (technical + fundamental + backtest)" || true
-  echo "✅ Repo dibuat: $GH_USER/$REPO_NAME"
+echo "── 2/5 Buat repo $GH_USER/$REPO ──"
+if ! "$GH" repo view "$GH_USER/$REPO" >/dev/null 2>&1; then
+  "$GH" repo create "$REPO" --public --description "📊 Yors Market Analysis v5 — XAU/USD (technical + fundamental + backtest)" && echo "✅ Repo dibuat"
 else
-  echo "ℹ️  Repo sudah ada"
+  echo "ℹ️  Repo sudah ada — akan diperbarui"
 fi
 
-echo "── 3/5 Commit & push ──"
+echo "── 3/5 Commit versi terbaru ──"
 cd "$DIR"
-if [ ! -d .git ]; then git init -b main >/dev/null; fi
-git add index.html README.md .nojekyll
-git commit -m "Yors Market Analysis v5 — unified ctx scoring, DST-aware sessions, calendar, circuit breaker, backtest replay" >/dev/null 2>&1 || echo "ℹ️  Tidak ada perubahan baru"
+# pastikan index.html adalah versi terbaru dari file master
+if [ -f "../Yors_Market_Analysis_v5.html" ]; then cp "../Yors_Market_Analysis_v5.html" index.html; fi
+git add -A
+git -c user.name="Yors" -c user.email="yors@local" commit -m "Yors Market Analysis v5 deploy" >/dev/null 2>&1 || echo "ℹ️  Tidak ada perubahan baru"
 git remote remove origin >/dev/null 2>&1 || true
-git remote add origin "https://github.com/$GH_USER/$REPO_NAME.git"
+git remote add origin "https://github.com/$GH_USER/$REPO.git"
+
+echo "── 4/5 Push + aktifkan GitHub Pages ──"
 git push -u origin main --force
+"$GH" api --method POST "repos/$GH_USER/$REPO/pages" -f "source[branch]=main" -f "source[path]=/" >/dev/null 2>&1 \
+  || "$GH" api --method PUT "repos/$GH_USER/$REPO/pages" -f "source[branch]=main" -f "source[path]=/" >/dev/null 2>&1 \
+  || echo "⚠️  Aktifkan Pages manual: repo → Settings → Pages → Branch: main → Save"
 
-echo "── 4/5 Aktifkan GitHub Pages ──"
-gh api --method POST "repos/$GH_USER/$REPO_NAME/pages" -f "source[branch]=main" -f "source[path]=/" >/dev/null 2>&1 \
-  || gh api --method PUT "repos/$GH_USER/$REPO_NAME/pages" -f "source[branch]=main" -f "source[path]=/" >/dev/null 2>&1 \
-  || echo "⚠️  Aktifkan Pages manual: Settings → Pages → Branch: main"
-
-echo "── 5/5 Selesai ──"
+echo "── 5/5 Selesai ═══"
 echo ""
-echo "🌐 WEB ANDA: https://$GH_USER.github.io/$REPO_NAME/"
-echo "   (online ±1-2 menit setelah pesan ini)"
+echo "🌐 WEB ANDA: https://$GH_USER.github.io/$REPO/"
+echo "   Online dalam ±1–2 menit. Bookmark URL tersebut."
 echo ""
