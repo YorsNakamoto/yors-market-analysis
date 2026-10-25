@@ -1,0 +1,2 @@
+[menunggu login GitHub...]
+ERROR: login tidak selesai dalam 15 menit. Jalankan ulang: expect /tmp/ghauth.exp lalu bash /tmp/deploy_watcher.sh

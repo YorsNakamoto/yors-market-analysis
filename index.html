@@ -1213,6 +1213,15 @@ function saveConfig(cfg) {
 function loadConfig() {
   try { return JSON.parse(localStorage.getItem(CFG_KEY)) || null; } catch { return null; }
 }
+// v5 FIX: tombol "Hapus Data Tersimpan" memanggil clearSavedCfg() sejak v4
+//      tapi fungsinya tidak pernah ada — tambahkan implementasinya.
+function clearSavedCfg() {
+  try { localStorage.removeItem(CFG_KEY); } catch {}
+  $('saved-notice').style.display = 'none';
+  $('saved-banner').style.display = 'none';
+  ['td-key','anthropic-key','fred-key','tg-tok','tg-chat'].forEach(id => { const el = $(id); if (el) el.value = ''; });
+  toast('Konfigurasi tersimpan dihapus dari browser', 'success');
+}
 
 // Auto-fill setup form from saved config
 function autoFillSetup() {
