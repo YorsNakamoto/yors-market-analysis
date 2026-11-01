@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📊 Yors Market Analysis v5 — XAU/USD</title>
+<title>📊 Yors Market Analysis v5.1 — XAU/USD</title>
 <style>
   :root {
     --bg: #0a0d12;
@@ -598,6 +598,11 @@
           <label>Min Prob Scalp M15 (%)</label>
           <input id="scalp-prob-m15" type="number" value="58" min="40" max="80">
           <div class="hint">Scalp entry. Default: 58%</div>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label>Min Prob H1 Swing (%)</label>
+          <input id="scalp-prob-h1" type="number" value="60" min="40" max="90">
+          <div class="hint">Sinyal swing H1. Default: 60%</div>
         </div>
       </div>
     </div>
@@ -1241,6 +1246,7 @@ function autoFillSetup() {
   if (c.scalpProbM1)  $('scalp-prob-m1').value  = c.scalpProbM1;
   if (c.scalpProbM5)  $('scalp-prob-m5').value  = c.scalpProbM5;
   if (c.scalpProbM15) $('scalp-prob-m15').value = c.scalpProbM15;
+  if (c.scalpProbH1)  $('scalp-prob-h1').value  = c.scalpProbH1;
   if (c.sound !== undefined)    $('sound-on').checked = c.sound;
   if (c.notif !== undefined)    $('notif-on').checked = c.notif;
   $('saved-notice').style.display = 'block';
@@ -1285,6 +1291,7 @@ function startBot() {
     scalpProbM1:  parseInt($('scalp-prob-m1').value)  || 52,
     scalpProbM5:  parseInt($('scalp-prob-m5').value)  || 55,
     scalpProbM15: parseInt($('scalp-prob-m15').value) || 58,
+    scalpProbH1:  parseInt($('scalp-prob-h1').value)  || 60,
     sound: $('sound-on').checked,
     notif: $('notif-on').checked
   };
@@ -2270,15 +2277,22 @@ function updVTPanel() {
 const SCALP_CTRL = {
   m1:  { lastSent: 0, lastDir: '' },
   m5:  { lastSent: 0, lastDir: '' },
-  m15: { lastSent: 0, lastDir: '' }   // ✅ FIX: tambah M15 cooldown tracker
+  m15: { lastSent: 0, lastDir: '' },   // ✅ FIX: tambah M15 cooldown tracker
+  h1:  { lastSent: 0, lastDir: '' }    // ✅ v5.1: H1 swing signal tracker
 };
 const SCALP_MIN_PROB    = 55; // Diturunkan: M1=55%, M5=55%, M15=58% (di-override per TF)
 const SCALP_MIN_ENTRIES = 2;  // Cukup 2 faktor konfirmasi
 const SCALP_COOLDOWN_M1  =  5 * 60 * 1000; // M1: cooldown 5 menit
 const SCALP_COOLDOWN_M5  =  8 * 60 * 1000; // M5: cooldown 8 menit
 const SCALP_COOLDOWN_M15 = 15 * 60 * 1000; // M15: cooldown 15 menit
+const SCALP_COOLDOWN_H1  = 60 * 60 * 1000; // H1: cooldown 60 menit (swing)
 const SCALP_COOLDOWN     =  7 * 60 * 1000; // fallback
 
+// v5.1 REFACTOR (bug cooldown hangus): dulu fungsi ini meng-set ctrl.lastSent
+// DI DALAM predikat — cooldown "hangus" meski pengiriman belum terjadi/gagal
+// (mis. kena crash renderLog atau network error) dan sinyal berikutnya tertahan
+// penuh cooldown tanpa pernah terkirim. Sekarang murni keputusan; cooldown
+// dicatat markScalpSent() HANYA setelah sendMessage sukses.
 function shouldSendScalp(sc, tf, ict) {
   if (!sc || sc.dir === 'wait') return false;
   // Gunakan flag autoScalp khusus (terpisah dari autoSend signal utama)
@@ -2299,23 +2313,29 @@ function shouldSendScalp(sc, tf, ict) {
   }
 
   // Min prob per TF — diambil dari config (dengan fallback default)
-  const minProb = tf === 'm15' ? (ST.cfg.scalpProbM15 || 58)
+  const minProb = tf === 'h1'  ? (ST.cfg.scalpProbH1  || 60)
+                : tf === 'm15' ? (ST.cfg.scalpProbM15 || 58)
                 : tf === 'm5'  ? (ST.cfg.scalpProbM5  || 55)
                 :                (ST.cfg.scalpProbM1   || 52);
   if (prob < minProb) return false;
-  if (reasons.length < 2) return false;
+  if (!reasons || reasons.length < (tf === 'h1' ? 3 : 2)) return false;
 
-  // Cooldown per TF
-  const cooldown = tf === 'm15' ? SCALP_COOLDOWN_M15
+  // Cooldown per TF (hanya dibaca, tidak di-set di sini)
+  const cooldown = tf === 'h1'  ? SCALP_COOLDOWN_H1
+                 : tf === 'm15' ? SCALP_COOLDOWN_M15
                  : tf === 'm5'  ? SCALP_COOLDOWN_M5
                  : SCALP_COOLDOWN_M1;
   const ctrl = SCALP_CTRL[tf] || (SCALP_CTRL[tf] = { lastSent: 0, lastDir: '' });
-  const now3 = Date.now();
-  if (ctrl.lastDir === sc.dir && now3 - ctrl.lastSent < cooldown) return false;
+  if (ctrl.lastDir === sc.dir && Date.now() - ctrl.lastSent < cooldown) return false;
 
-  ctrl.lastSent = now3;
-  ctrl.lastDir  = sc.dir;
   return true;
+}
+
+// Catat pengiriman scalp sukses — dipanggil HANYA setelah sendMessage berhasil.
+function markScalpSent(tf, dir) {
+  const ctrl = SCALP_CTRL[tf] || (SCALP_CTRL[tf] = { lastSent: 0, lastDir: '' });
+  ctrl.lastSent = Date.now();
+  ctrl.lastDir  = dir;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -4116,7 +4136,8 @@ function runAnalysis() {
   const scalp = {
     m1:  m1.length  >= 10 ? scalpSignal(m1)  : null,
     m5:  m5.length  >= 10 ? scalpSignal(m5)  : null,
-    m15: m15.length >= 15 ? scalpSignal(m15) : null
+    m15: m15.length >= 15 ? scalpSignal(m15) : null,
+    h1:  h1.length  >= 15 ? scalpSignal(h1)  : null   // v5.1: H1 SWING — sinyal H1 kini ikut terkirim ke Telegram
   };
   const sr  = ict.sr || findSR([...h1, ...m15.slice(-20)], ST.price);
   const fib = ict.fib || fibonacci(h4);
@@ -4161,58 +4182,82 @@ function runAnalysis() {
   // ── MAIN SIGNAL DECISION ───────────────────────────
   // ST.lastSig = last DISPLAYED signal (for UI + manual send)
   // ST.lastSentSig = last signal actually SENT to Telegram (to avoid re-send)
-  const prevSig   = ST.lastSig;           // what was displayed before
-  const prevSent  = ST.lastSentSig;       // what was last sent to TG
+  // v5.1: seluruh blok dibungkus try/catch — satu error TIDAK BOLEH mematikan
+  //       pipeline (dulu crash renderLog mematikan semuanya tanpa jejak).
+  try {
+    const prevSig   = ST.lastSig;           // what was displayed before
+    const prevSent  = ST.lastSentSig;       // what was last sent to TG
 
-  // Store current signal for UI use
-  ST.lastSig = sig;
+    // Store current signal for UI use
+    ST.lastSig = sig;
 
-  if (sig.dir !== 'wait') {
-    $('send-btn').disabled = false;
+    if (sig.dir !== 'wait') {
+      $('send-btn').disabled = false;
 
-    // Decide if this is a NEW signal worth sending
-    const dirChanged   = !prevSent || prevSent.dir !== sig.dir;
-    const probImproved = prevSent && sig.dir === prevSent.dir && sig.prob > prevSent.prob + 4; // was +8
-    const expired      = prevSent && Date.now() - prevSent.time > 20 * 60 * 1000; // was 40min
-    const isNewSignal  = dirChanged || probImproved || expired;
+      // Decide if this is a NEW signal worth sending
+      const dirChanged   = !prevSent || prevSent.dir !== sig.dir;
+      const probImproved = prevSent && sig.dir === prevSent.dir && sig.prob > prevSent.prob + 4; // was +8
+      const expired      = prevSent && Date.now() - prevSent.time > 20 * 60 * 1000; // was 40min
+      const isNewSignal  = dirChanged || probImproved || expired;
 
-    if (isNewSignal) {
-      const sigToSend = { ...sig, time: Date.now() };
-      ST.lastSentSig = sigToSend;
+      if (isNewSignal) {
+        const sigToSend = { ...sig, time: Date.now() };
+        ST.lastSentSig = sigToSend;
 
-      // Log it
-      addLog({ ...sig, isScalp: false });
+        // Log it (addLog menormalisasi prob — aman untuk semua konsumen)
+        addLog({ ...sig, isScalp: false });
 
-      // Virtual trade
-      vtLoad();
-      if (!VT.active) vtOpenTrade(sigToSend);
+        // Virtual trade
+        vtLoad();
+        if (!VT.active) vtOpenTrade(sigToSend);
 
-      // Auto-send to Telegram
-      if (ST.cfg.autoSend) {
-        sendTelegramSignal(sigToSend, false).catch(e => console.error('TG send error:', e));
+        // Auto-send to Telegram
+        if (ST.cfg.autoSend) {
+          if (ST.cfg.tok && ST.cfg.cid) {
+            sendTelegramSignal(sigToSend, false)
+              .then(ok => {
+                if (!ok) addChatLog('sys', `[SIGNAL GAGAL] ${sig.dir.toUpperCase()} ${sig.prob.toFixed(0)}% — gagal kirim ke Telegram (cek koneksi/token)`);
+              })
+              .catch(e => {
+                console.error('TG send error:', e);
+                addChatLog('sys', `[SIGNAL GAGAL] ${sig.dir.toUpperCase()} — ${e.message}`);
+              });
+          } else {
+            addChatLog('sys', '[SIGNAL SKIP] Token/Chat ID Telegram belum diisi — sinyal utama tidak terkirim');
+          }
+        } else {
+          // v5.1 diagnostik: sinyal valid tapi auto-send OFF — user harus tahu
+          addChatLog('sys', `[SIGNAL TERDETEKSI] ${sig.dir.toUpperCase()} ${sig.prob.toFixed(0)}% — Auto-Send OFF, aktifkan di setup`);
+        }
+
+        if (ST.cfg.sound) playSound(sig.dir);
+        if (ST.cfg.notif && Notification.permission === 'granted') {
+          try { new Notification(`${PAIR_CFG[activePairKey]?.emoji||'📊'} ${activePairKey} ${sig.dir.toUpperCase()} ${sig.grade||''}`, {
+            body: `${sig.prob.toFixed(1)}% | Entry:${fmtP(sig.entry)} SL:${fmtP(sig.sl)}`
+          }); } catch {}
+        }
       }
-
-      if (ST.cfg.sound) playSound(sig.dir);
-      if (ST.cfg.notif && Notification.permission === 'granted') {
-        try { new Notification(`${PAIR_CFG[activePairKey]?.emoji||'📊'} ${activePairKey} ${sig.dir.toUpperCase()} ${sig.grade||''}`, {
-          body: `${sig.prob.toFixed(1)}% | Entry:${fmtP(sig.entry)} SL:${fmtP(sig.sl)}`
-        }); } catch {}
-      }
+    } else {
+      $('send-btn').disabled = true;
     }
-  } else {
-    $('send-btn').disabled = true;
+  } catch (eMain) {
+    console.error('Main-signal pipeline error:', eMain);
+    try { addChatLog('sys', '[ERROR] Pipeline sinyal utama: ' + eMain.message); } catch {}
   }
 
-  // ── SCALP SIGNALS — auto-send M1, M5, M15 ke Telegram ──
-  ['m1', 'm5', 'm15'].forEach(tf => {
-    const sc = scalp[tf]; if (!sc || sc.dir === 'wait') return;
-    const prob = sc.dir === 'buy' ? sc.bP : sc.sP;
-    // Debug log: tampilkan di console agar mudah diagnosa
-    if (sc.dir !== 'wait') {
+  // ── SCALP + SWING SIGNALS — auto-send M1, M5, M15, H1 ke Telegram ──
+  // v5.1: (1) H1 SWING kini ikut dikirim; (2) try/catch per-TF agar satu
+  //       kegagalan tidak membatalkan TF lain; (3) cooldown hanya dicatat
+  //       setelah kirim sukses; (4) diagnostik skip tercatat di chat log.
+  ['m1', 'm5', 'm15', 'h1'].forEach(tf => {
+    try {
+      const sc = scalp[tf]; if (!sc || sc.dir === 'wait') return;
+      const prob = sc.dir === 'buy' ? sc.bP : sc.sP;
       const reasons = sc.dir === 'buy' ? sc.bR : sc.sR;
-      console.log(`[SCALP ${tf.toUpperCase()}] dir=${sc.dir} prob=${prob.toFixed(0)}% reasons=${reasons.length} autoSend=${ST.cfg.autoSend} tok=${!!ST.cfg.tok} cid=${!!ST.cfg.cid}`);
-    }
-    if (shouldSendScalp(sc, tf, ict)) {
+      console.log(`[SCALP ${tf.toUpperCase()}] dir=${sc.dir} prob=${prob.toFixed(0)}% reasons=${reasons?.length||0} autoSend=${ST.cfg.autoSend} autoScalp=${ST.cfg.autoScalp} tok=${!!ST.cfg.tok} cid=${!!ST.cfg.cid}`);
+
+      if (!shouldSendScalp(sc, tf, ict)) return;
+
       const enrichedSc = {
         ...sc,
         tp1: sc.tp1 || sc.tp,
@@ -4220,9 +4265,19 @@ function runAnalysis() {
         isScalp: true, scalp_tf: tf, time: Date.now()
       };
       addLog(enrichedSc);
-      const tfLabel = tf === 'm1' ? 'M1' : tf === 'm5' ? 'M5' : 'M15';
-      sendTelegramScalp(enrichedSc, tfLabel).catch(e => console.error('TG scalp error:', e));
+      const tfLabel = tf === 'm1' ? 'M1' : tf === 'm5' ? 'M5' : tf === 'm15' ? 'M15' : 'H1';
+      sendTelegramScalp(enrichedSc, tfLabel)
+        .then(ok => {
+          if (ok) markScalpSent(tf, sc.dir); // cooldown dicatat HANYA setelah sukses
+        })
+        .catch(e => {
+          console.error('TG scalp error:', e);
+          addChatLog('sys', `[SCALP ${tfLabel} ERROR] ${e.message}`);
+        });
       if (ST.cfg.sound) playSound(sc.dir);
+    } catch (eScalp) {
+      console.error(`Scalp ${tf} pipeline error:`, eScalp);
+      try { addChatLog('sys', `[ERROR] Scalp ${tf.toUpperCase()}: ` + eScalp.message); } catch {}
     }
   });
 }
@@ -4463,6 +4518,8 @@ function renderLog() {
     const fund = s.fund || {};
     const dxyStr = fund.dxy ? `DXY:${fund.dxy}` : '';
     const cotStr = fund.cotBias ? `COT:${fund.cotBias}` : '';
+    // v5.1 FIX: prob mungkin undefined pada entri scalp lama — jangan sampai crash
+    const probVal = (s.prob !== undefined && s.prob !== null && !isNaN(s.prob)) ? s.prob : (s.dir === 'buy' ? s.bP : s.sP) || 0;
     return `<div class="log-entry">
       <div><span class="badge ${s.dir === 'buy' ? 'badge-buy' : 'badge-sell'}">${s.dir.toUpperCase()}</span></div>
       <div>
@@ -4472,7 +4529,7 @@ function renderLog() {
           <span style="color:var(--green)">TP1: <b>${fmtP(s.tp1)}</b></span>
           <span style="color:var(--green)">TP2: <b>${fmtP(s.tp2)}</b></span>
           <span class="text-muted">R:R 1:${rr}</span>
-          <span class="badge ${s.prob >= 80 ? 'badge-gold' : 'badge-wait'}">${s.prob.toFixed(0)}/100</span>
+          <span class="badge ${probVal >= 80 ? 'badge-gold' : 'badge-wait'}">${probVal.toFixed(0)}/100</span>
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px">
           <span class="log-htf-badge ${htfCls}">${htfStr}${htf.conflict?' ⚠️':''}</span>
@@ -4480,7 +4537,7 @@ function renderLog() {
           ${cotStr ? `<span class="badge badge-gold" style="font-size:10px">${cotStr}</span>` : ''}
         </div>
         <div class="log-reasons">
-          ${s.bR.slice(0,3).concat(s.sR.slice(0,3)).slice(0,4).map(r => `<div class="log-reason">${r}</div>`).join('')}
+          ${(s.bR||[]).slice(0,3).concat((s.sR||[]).slice(0,3)).slice(0,4).map(r => `<div class="log-reason">${r}</div>`).join('')}
         </div>
       </div>
       <div class="log-time">${s.ts}</div>
@@ -4610,30 +4667,43 @@ async function tgSend(text) {
     return res.json();
   };
 
-  try {
+  // v5.1: retry ringan untuk kegagalan jaringan sesaat (WC 429/5xx tetap dilaporkan)
+  const sendOnce = async () => {
     let d = await tryPost('HTML');
     if (!d.ok) {
       console.warn('TG HTML gagal, coba plain text:', d.description);
       // Strip semua HTML tag → plain text
       const plain = text.replace(/<[^>]+>/g, '').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
-      d = await tryPost(null, plain); // kirim plain text langsung
-      if (!d.ok) {
-        console.error('TG plain text juga gagal:', d);
-        toast('❌ TG: ' + (d.description || 'Unknown error'), 'error', 7000);
-        return false;
-      }
+      d = await tryPost(null, plain);
     }
-    if (!d.ok) {
+    return d;
+  };
+
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      let d = await sendOnce();
+      if (d.ok) return true;
+      // 429 (rate limit) → tunggu retry_after lalu coba sekali lagi
+      if (attempt === 1 && d.parameters?.retry_after) {
+        await new Promise(r => setTimeout(r, (d.parameters.retry_after + 1) * 1000));
+        d = await sendOnce();
+        if (d.ok) return true;
+      }
       console.error('TG Error:', d);
       toast('❌ TG: ' + (d.description || 'Unknown error'), 'error', 7000);
+      try { addChatLog('sys', '[TELEGRAM ERROR] ' + (d.description || 'unknown')); } catch {}
       return false;
+    } catch (e) {
+      if (attempt === 2) {
+        console.error('TG fetch error:', e);
+        toast('❌ TG Network error: ' + e.message, 'error', 6000);
+        try { addChatLog('sys', '[TELEGRAM NETWORK] ' + e.message); } catch {}
+        return false;
+      }
+      await new Promise(r => setTimeout(r, 1500)); // retry ke-2 setelah 1.5s
     }
-    return true;
-  } catch (e) {
-    console.error('TG fetch error:', e);
-    toast('❌ TG Network error: ' + e.message, 'error', 6000);
-    return false;
   }
+  return false;
 }
 
 // Manual send button — reads ST.lastSig directly
@@ -4783,6 +4853,7 @@ async function sendTelegramScalp(sc, tf) {
   const grade   = probVal >= 80 ? '[KUAT ⭐]' : probVal >= 65 ? '[OK]' : '[LEMAH]';
   const tfDesc  = tf === 'M1' ? 'Ultra Scalp — target 2-5 menit'
                 : tf === 'M5' ? 'Fast Scalp — target 5-15 menit'
+                : tf === 'H1' ? 'H1 Swing — target 1-4 jam (SL lebih lega, size kecil)'
                 : 'Scalp Entry — target 15-30 menit';
 
   const h1b  = ST.htfBias.h1?.toUpperCase()  || '?';
@@ -4826,9 +4897,11 @@ async function sendTelegramScalp(sc, tf) {
       toast(`❌ Scalp ${tf} gagal kirim`, 'error', 6000);
       addChatLog('sys', `[SCALP ${tf} GAGAL] ${sc.dir.toUpperCase()} ${probVal.toFixed(0)}%`);
     }
+    return ok; // v5.1 FIX: pemanggil butuh status sukses untuk markScalpSent
   } catch(e) {
     console.error('sendTelegramScalp error:', e);
     toast(`❌ Scalp ${tf} error: ${e.message}`, 'error', 6000);
+    return false;
   }
 }
 
@@ -4901,12 +4974,15 @@ function lrnInit() { LRN.db = dbLoad(); }
 // ── SAVE SIGNAL TO DB ──────────────────────────────────
 function lrnSaveSignal(sig) {
   if (!LRN.db) lrnInit();
+  // v5.1 FIX: scalp tidak punya `prob` — turunkan dari bP/sP agar DB belajar valid
+  const probSafe = (sig.prob !== undefined && sig.prob !== null && !isNaN(sig.prob))
+    ? sig.prob : (sig.dir === 'buy' ? sig.bP : sig.sP) || 0;
   const rec = {
     id: Date.now(),
     ts: now(), price: ST.price,
-    dir: sig.dir, prob: sig.prob,
+    dir: sig.dir, prob: probSafe,
     entry: sig.entry, sl: sig.sl, tp1: sig.tp1, tp2: sig.tp2,
-    slPips: Math.abs(sig.entry - sig.sl),
+    slPips: Math.abs((sig.entry || 0) - (sig.sl || 0)),
     bR: sig.bR, sR: sig.sR,
     factors: extractFactors(sig),
     outcome: 'pending', // tp1 | tp2 | sl | pending
@@ -5186,7 +5262,7 @@ function renderOutcomeTracker() {
           <span style="font-size:12px;color:var(--red)">SL <b>${s.sl ? '$'+s.sl.toFixed(2) : '—'}</b></span>
           <span style="font-size:12px;color:var(--green)">TP1 <b>${s.tp1 ? '$'+s.tp1.toFixed(2) : '—'}</b></span>
           <span style="font-size:12px;color:var(--green)">TP2 <b>${s.tp2 ? '$'+s.tp2.toFixed(2) : '—'}</b></span>
-          <span style="font-size:12px">Prob <b>${s.prob.toFixed(0)}%</b></span>
+          <span style="font-size:12px">Prob <b>${(s.prob ?? 0).toFixed(0)}%</b></span>
           <span style="font-weight:700;color:${rrCol}">${rr}</span>
         </div>
         <span style="font-size:11px;color:var(--text3)">#${s.id}</span>
@@ -5208,8 +5284,8 @@ function renderBacktest(st) {
   if (st.total < 2) { el.innerHTML = '<div class="empty">Minimal 2 signal selesai diperlukan untuk backtest summary</div>'; return; }
   const winSigs = LRN.db.signals.filter(s => s.outcome === 'tp1' || s.outcome === 'tp2');
   const lossSigs = LRN.db.signals.filter(s => s.outcome === 'sl');
-  const avgProbWin  = winSigs.length  ? (winSigs.reduce((a,s)=>a+s.prob,0)/winSigs.length).toFixed(1) : '—';
-  const avgProbLoss = lossSigs.length ? (lossSigs.reduce((a,s)=>a+s.prob,0)/lossSigs.length).toFixed(1) : '—';
+  const avgProbWin  = winSigs.length  ? (winSigs.reduce((a,s)=>a+(s.prob||0),0)/winSigs.length).toFixed(1) : '—';
+  const avgProbLoss = lossSigs.length ? (lossSigs.reduce((a,s)=>a+(s.prob||0),0)/lossSigs.length).toFixed(1) : '—';
 
   // Best/worst factors
   const facs = Object.keys(weightDefault());
@@ -5911,15 +5987,16 @@ ${await quickStatsText()}`);
     }
 
     case '/scalp': {
-      // Show current M1/M5/M15 scalp signal status
-      const { m1, m5, m15 } = ST.data;
+      // Show current M1/M5/M15/H1 scalp+swing signal status
+      const { m1, m5, m15, h1 } = ST.data;
       const scalpNow = {
         m1:  m1.length  >= 10 ? scalpSignal(m1)  : null,
         m5:  m5.length  >= 10 ? scalpSignal(m5)  : null,
-        m15: m15.length >= 15 ? scalpSignal(m15) : null
+        m15: m15.length >= 15 ? scalpSignal(m15) : null,
+        h1:  h1.length  >= 15 ? scalpSignal(h1)  : null
       };
       const safeN = (n) => (n && isFinite(n) && n !== 0) ? n.toFixed(2) : '—';
-      const scalpRows = ['M1','M5','M15'].map(tf => {
+      const scalpRows = ['M1','M5','M15','H1'].map(tf => {
         const k = tf.toLowerCase();
         const sc = scalpNow[k];
         if (!sc) return `${tf}: — (no data)`;
@@ -5929,12 +6006,12 @@ ${await quickStatsText()}`);
         const sl = sc.sl || 0;
         const tp2 = sc.tp2 || sc.tp || 0;
         const ctrl = SCALP_CTRL[k] || {};
-        const cooldown = k === 'm15' ? SCALP_COOLDOWN_M15 : k === 'm5' ? SCALP_COOLDOWN_M5 : SCALP_COOLDOWN_M1;
+        const cooldown = k === 'h1' ? SCALP_COOLDOWN_H1 : k === 'm15' ? SCALP_COOLDOWN_M15 : k === 'm5' ? SCALP_COOLDOWN_M5 : SCALP_COOLDOWN_M1;
         const minsLeft = ctrl.lastSent ? Math.max(0, Math.ceil((cooldown - (Date.now() - ctrl.lastSent)) / 60000)) : 0;
         const cdStr = minsLeft > 0 ? ` | cooldown ${minsLeft}m` : '';
         return `${tf}: ${d} ${p.toFixed(0)}%${sc.dir !== 'wait' ? ` E:${(PAIR_CFG[activePairKey]?.pre||'$')}${safeN(entry)} TP:${safeN(tp2)} SL:${safeN(sl)}` : ''}${cdStr}`;
       }).join('\n');
-      const cfgScalp = `Auto Scalp: ${ST.cfg.autoScalp ? 'ON ✅' : 'OFF ❌'} | M1≥${ST.cfg.scalpProbM1||52}% M5≥${ST.cfg.scalpProbM5||55}% M15≥${ST.cfg.scalpProbM15||58}%`;
+      const cfgScalp = `Auto Scalp: ${ST.cfg.autoScalp ? 'ON ✅' : 'OFF ❌'} | M1≥${ST.cfg.scalpProbM1||52}% M5≥${ST.cfg.scalpProbM5||55}% M15≥${ST.cfg.scalpProbM15||58}% H1≥${ST.cfg.scalpProbH1||60}%`;
       await tgReply(
 `⚡ <b>Status Scalp Signal — ${activePairKey} Real-time</b>
 
@@ -5951,7 +6028,7 @@ ${scalpRows}
     case '/scalpon': {
       ST.cfg.autoScalp = true;
       saveConfig(ST.cfg);
-      await tgReply('⚡ Auto-Scalp Telegram diaktifkan! Signal M1/M5/M15 akan terkirim otomatis.\n\nGunakan /scalp untuk lihat status terkini.');
+      await tgReply('⚡ Auto-Scalp Telegram diaktifkan! Signal M1/M5/M15 + H1 Swing akan terkirim otomatis.\n\nGunakan /scalp untuk lihat status terkini.');
       addChatLog('sys', 'Auto-Scalp diaktifkan via Telegram');
       break;
     }
@@ -6177,17 +6254,25 @@ Singkat, max 250 kata, format plain (bukan markdown).`;
   }
 }
 function addLog(sig) {
-  // In-session log — store HTF bias and fund data for backtest analysis
-  ST.sigLog.unshift({
-    ...sig, ts: now(), price: ST.price,
+  // v5.1 FIX (akar masalah sinyal tak terkirim): entri SCALP tidak punya field
+  // `prob` (hanya bP/sP) → renderLog() crash di s.prob.toFixed() → eksepsi
+  // memutus runAnalysis() SEBELUM sendTelegramScalp() sempat jalan, sehingga
+  // NOL sinyal scalp pernah sampai ke Telegram. Normalisasi prob di sini agar
+  // semua konsumen (renderLog, learning DB, outcome tracker) selalu dapat angka.
+  const normProb = (sig.prob !== undefined && sig.prob !== null && !isNaN(sig.prob))
+    ? sig.prob
+    : (sig.dir === 'buy' ? sig.bP : sig.sP) || 0;
+  const rec = {
+    ...sig, prob: normProb, ts: now(), price: ST.price,
     htfBias: { ...ST.htfBias },
     fund: { dxy: FUND.dxy.dir, cotBias: FUND.cot.bias, yield: FUND.yield.val, news: FUND.news.score }
-  });
+  };
+  ST.sigLog.unshift(rec);
   if (ST.sigLog.length > 30) ST.sigLog.pop();
-  renderLog();
+  try { renderLog(); } catch (e) { console.error('renderLog error:', e); }
   // Learning DB
   if (!LRN.db) lrnInit();
-  lrnSaveSignal(sig);
+  try { lrnSaveSignal(rec); } catch (e) { console.error('lrnSaveSignal error:', e); }
 }
 
 // Initialize learning on load
@@ -6726,7 +6811,7 @@ async function fetchAllPairPricesFallback() {
   } catch {}
 }
 
-console.log('📊 Yors Market Analysis v5 — engine v5: unified ctx scoring, DST-aware sessions, economic calendar, circuit breaker, backtest replay');
+console.log('📊 Yors Market Analysis v5.1 — engine v5.1: unified ctx scoring, DST-aware sessions, economic calendar, circuit breaker, backtest replay');
 </script>
 </body>
 </html>

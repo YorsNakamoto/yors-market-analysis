@@ -1,9 +1,9 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-#  🚀 DEPLOY SATU PERINTAH — Yors Market Analysis v5 → GitHub Pages
+#  🚀 DEPLOY SATU PERINTAH — Yors Market Analysis v5.1 → GitHub Pages
 #
 #  Cara pakai (di Terminal Mac):
-#      cd "/Users/nab/Documents/TRADING TOOLS/yors-web"
+#      cd "/Users/maxentyors/Documents/TRADING TOOLS/yors-web"
 #      bash DEPLOY.sh
 #
 #  Yang terjadi:
@@ -43,10 +43,12 @@ fi
 
 echo "── 3/5 Commit versi terbaru ──"
 cd "$DIR"
-# pastikan index.html adalah versi terbaru dari file master
-if [ -f "../Yors_Market_Analysis_v5.html" ]; then cp "../Yors_Market_Analysis_v5.html" index.html; fi
+# v5.1 FIX: baris lama MENIMPA index.html dengan file master v5 lama
+# (Yors_Market_Analysis_v5.html) — menghapus semua perbaikan pipeline Telegram
+# & sinyal H1. index.html di folder ini adalah SATU-SATUNYA sumber kebenaran.
+# if [ -f "../Yors_Market_Analysis_v5.html" ]; then cp "../Yors_Market_Analysis_v5.html" index.html; fi
 git add -A
-git -c user.name="Yors" -c user.email="yors@local" commit -m "Yors Market Analysis v5 deploy" >/dev/null 2>&1 || echo "ℹ️  Tidak ada perubahan baru"
+git -c user.name="Yors" -c user.email="yors@local" commit -m "Yors Market Analysis v5.1 deploy" >/dev/null 2>&1 || echo "ℹ️  Tidak ada perubahan baru"
 git remote remove origin >/dev/null 2>&1 || true
 git remote add origin "https://github.com/$GH_USER/$REPO.git"
 
