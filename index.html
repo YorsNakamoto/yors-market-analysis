@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📊 Yors Market Analysis v5.1 — XAU/USD</title>
+<title>📊 Yors Market Analysis v5.1 — BTC/USD</title>
 <style>
   :root {
     --bg: #0a0d12;
@@ -439,7 +439,7 @@
   <div class="topbar-left">
     <div class="topbar-title">📊 Yors Market Analysis</div>
     <div style="display:flex;gap:2px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:2px;margin-left:8px" id="pair-tabs">
-      <button class="pair-tab active" id="pt-XAUUSD" onclick="switchPair('XAU/USD')">🥇 XAU/USD</button>
+      <button class="pair-tab active" id="pt-BTCUSD" onclick="switchPair('BTC/USD')">₿ BTC/USD</button>
     </div>
     <div class="flex gap8" style="margin-left:10px">
       <div class="status-dot status-load" id="s-dot"></div>
@@ -469,7 +469,7 @@
   <div class="setup-hero">
     <div class="setup-hero-icon">📊</div>
     <h1>Yors Market Analysis</h1>
-    <p>Multi-Pair Analysis · XAU/USD · Real-Time Prices</p>
+    <p>Bitcoin Analysis · BTC/USD · Real-Time Prices</p>
     <div id="saved-notice" style="display:none;margin-top:10px;background:var(--greenBg);border:1px solid var(--green2);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--green)">
       ✅ Konfigurasi tersimpan ditemukan — field sudah diisi otomatis
     </div>
@@ -491,7 +491,7 @@
         1. Buka <a href="https://twelvedata.com" target="_blank" style="color:var(--blue)">twelvedata.com</a> → Daftar gratis<br>
         2. Masuk ke dashboard → salin API key<br>
         3. Free tier: 800 request/hari, 8 req/menit<br>
-        4. Pairs: <code>XAU/USD</code> — <span style="color:var(--green)">Data disimpan otomatis di browser</span>
+        4. Pairs: <code>BTC/USD</code> — <span style="color:var(--green)">Data disimpan otomatis di browser</span>
       </div>
     </div>
   </div>
@@ -628,7 +628,7 @@
   <button class="btn btn-green btn-full" onclick="startBot()">🚀 Mulai Yors Market Analysis</button>
 
   <div class="disclaimer">
-    ⚠️ <strong>Disclaimer Yors Market Analysis:</strong> Bot ini hanya untuk edukasi dan referensi analisa teknikal. Bukan saran investasi. Trading forex/gold mengandung risiko tinggi kehilangan modal. Selalu gunakan manajemen risiko yang ketat.
+    ⚠️ <strong>Disclaimer Yors Market Analysis:</strong> Bot ini hanya untuk edukasi dan referensi analisa teknikal. Bukan saran investasi. Trading cryptocurrency/bitcoin mengandung risiko tinggi kehilangan modal. Selalu gunakan manajemen risiko yang ketat.
   </div>
 </div>
 
@@ -640,7 +640,7 @@
     <!-- Chart Toolbar -->
     <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid var(--border2);flex-wrap:wrap;gap:8px">
       <div style="display:flex;align-items:center;gap:12px">
-        <span style="font-weight:700;font-size:15px;color:#e6edf3" id="price-card-pair-lbl">🥇 XAU/USD</span>
+        <span style="font-weight:700;font-size:15px;color:#e6edf3" id="price-card-pair-lbl">₿ BTC/USD</span>
         <div class="price-big" id="c-price" style="font-size:26px;transition:color .15s">$0.00</div>
         <div id="p-change" style="font-size:13px;font-weight:600">—</div>
         <div style="display:flex;gap:10px;font-size:12px;color:#8b949e">
@@ -708,11 +708,11 @@
         <span id="live-prices-upd" style="font-size:10px;color:var(--text3);margin-left:auto">—</span>
       </div>
       <div id="all-pairs-prices" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
-        <div class="pair-price-box active-pair" id="pp-XAUUSD" onclick="switchPair('XAU/USD')" title="Klik untuk analisa XAU/USD">
-          <div style="font-size:10px;color:#d29922;font-weight:600">🥇 XAU/USD</div>
-          <div style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums" id="pp-p-XAUUSD">—</div>
-          <div style="font-size:10px" id="pp-c-XAUUSD">—</div>
-          <div id="pp-sig-XAUUSD" style="font-size:10px;margin-top:2px;font-weight:600;color:var(--text3)">—</div>
+        <div class="pair-price-box active-pair" id="pp-BTCUSD" onclick="switchPair('BTC/USD')" title="Klik untuk analisa BTC/USD">
+          <div style="font-size:10px;color:#f7931a;font-weight:600">₿ BTC/USD</div>
+          <div style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums" id="pp-p-BTCUSD">—</div>
+          <div style="font-size:10px" id="pp-c-BTCUSD">—</div>
+          <div id="pp-sig-BTCUSD" style="font-size:10px;margin-top:2px;font-weight:600;color:var(--text3)">—</div>
         </div>
 
       </div>
@@ -723,7 +723,7 @@
       <!-- Signal Card -->
       <div class="card" id="sig-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <div class="card-title" style="margin:0">Signal Utama — <span id="sig-pair-lbl" style="color:var(--gold)">XAU/USD</span></div>
+          <div class="card-title" style="margin:0">Signal Utama — <span id="sig-pair-lbl" style="color:var(--gold)">BTC/USD</span></div>
           <div style="display:flex;gap:6px;align-items:center">
             <span id="sig-time" style="font-size:10px;color:var(--text3)">—</span>
             <span id="sig-tg-sent" class="badge badge-gold" style="display:none;font-size:10px">📱 Sent</span>
@@ -867,7 +867,7 @@
 
     <!-- Multi-TF Table (original) -->
     <div class="card mb16">
-      <div class="card-title">Analisa Multi-Timeframe — <span id="chart-pair-label">🥇 XAU/USD</span> · M1 · M5 · M15 · H1 · H4</div>
+      <div class="card-title">Analisa Multi-Timeframe — <span id="chart-pair-label">₿ BTC/USD</span> · M1 · M5 · M15 · H1 · H4</div>
       <div style="overflow-x:auto">
       <table class="data-table" style="min-width:780px">
         <thead><tr><th>TF</th><th>Trend</th><th>EMA</th><th>RSI</th><th>MACD</th><th>Stoch</th><th>BB</th><th>ADX</th><th>ICT Zone</th><th>Signal</th></tr></thead>
@@ -886,6 +886,7 @@
       <div class="tab" onclick="showTab(this,'t-fun')">📰 Fundamental</div>
       <div class="tab" onclick="showTab(this,'t-log')">📋 Log Signal</div>
       <div class="tab" onclick="showTab(this,'t-learn');renderLearning()">📋 Trade Journal</div>
+      <div class="tab" onclick="showTab(this,'t-aioffice');if(window.AIOFFICE)AIOFFICE.onShow()">🤖 AI Office</div>
     </div>
 
     <!-- S/R Tab -->
@@ -1120,6 +1121,80 @@
 
   </div><!-- end t-learn -->
 
+  <!-- ═══ AI OFFICE TAB (v5.1 — tambahan murni, tidak mengubah struktur lain) ═══ -->
+  <div id="t-aioffice" class="tab-content">
+    <style>
+      #aio-3d-wrap{position:relative;background:radial-gradient(ellipse at 50% 30%,#141b29 0%,#0a0d12 70%);border:1px solid var(--border);border-radius:var(--radius2);overflow:hidden;height:520px;cursor:grab}
+      #aio-3d-wrap:active{cursor:grabbing}
+      #aio-3d-wrap canvas{display:block;width:100%;height:100%}
+      #aio-3d-hint{position:absolute;left:10px;bottom:8px;font-size:10px;color:var(--text3);pointer-events:none;background:rgba(10,13,18,.55);padding:2px 8px;border-radius:6px}
+      #aio-3d-badge{position:absolute;right:10px;top:8px;font-size:10px;color:var(--gold);pointer-events:none;background:rgba(10,13,18,.55);padding:2px 8px;border-radius:6px;font-family:monospace}
+      .aio-agent-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:13px 15px;cursor:pointer;transition:border-color .15s,transform .15s}
+      .aio-agent-card:hover{border-color:var(--text3);transform:translateY(-1px)}
+      .aio-agent-card .aio-role{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+      .aio-agent-card .aio-name{font-size:14px;font-weight:700;margin-bottom:3px}
+      .aio-agent-card .aio-status{font-size:11px;color:var(--text2);line-height:1.5;min-height:32px}
+      .aio-agent-card .aio-cnt{display:flex;gap:10px;margin-top:8px;font-size:10px;color:var(--text3)}
+      .aio-agent-card .aio-cnt b{color:var(--text)}
+      .aio-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px;vertical-align:1px}
+      .aio-dot.work{background:var(--green);animation:pulse 1.6s infinite}
+      .aio-dot.idle{background:var(--text3)}
+      .aio-dot.busy{background:var(--gold);animation:pulse .8s infinite}
+      @media (max-width:960px){ #aio-3d-wrap{height:400px} }
+      .aio-fb-agent{display:flex;gap:12px;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+      .aio-fb-ava{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+    </style>
+
+    <div class="card mb16" style="border-color:rgba(167,139,250,.3)">
+      <div class="card-title">🤖 Kantor AI Agent — Yors Trading Firm
+        <span style="display:flex;gap:6px;align-items:center">
+          <span id="aio-engine-lbl" style="font-size:10px;color:var(--text3);font-weight:400">memuat…</span>
+          <button class="btn btn-sm" id="aio-rotate-btn" onclick="AIOFFICE.toggleRotate()">🔄 Rotasi: ON</button>
+          <button class="btn btn-sm" onclick="AIOFFICE.resetCam()">🎯 Reset View</button>
+        </span>
+      </div>
+      <div id="aio-3d-wrap">
+        <div id="aio-3d-badge">YORS AI TRADING FIRM · 3 AGEN AKTIF</div>
+        <div id="aio-3d-hint">🖱️ drag = putar kamera · scroll = zoom · klik kartu agen = fokus</div>
+      </div>
+      <div id="aio-fallback" style="display:none"></div>
+    </div>
+
+    <div class="dash-grid-3" style="margin-bottom:14px">
+      <div class="aio-agent-card" id="aio-card-trader" onclick="AIOFFICE.focus('trader')" style="border-left:3px solid var(--blue)">
+        <div class="aio-role" style="color:var(--blue)">📈 Head Trader — Analisa Pasar</div>
+        <div class="aio-name">Alex · AI Analyst</div>
+        <div class="aio-status" id="aio-status-trader"><span class="aio-dot idle"></span>Menunggu data pasar…</div>
+        <div class="aio-cnt"><span>Analisa: <b id="aio-cnt-trader">0</b></span><span>Sinyal ditemukan: <b id="aio-cnt-sig">0</b></span></div>
+      </div>
+      <div class="aio-agent-card" id="aio-card-sender" onclick="AIOFFICE.focus('sender')" style="border-left:3px solid var(--green)">
+        <div class="aio-role" style="color:var(--green)">📤 Signal Dispatcher — Telegram Bot</div>
+        <div class="aio-name">Rio · AI Sender</div>
+        <div class="aio-status" id="aio-status-sender"><span class="aio-dot idle"></span>Siap mengirim ke bot Telegram…</div>
+        <div class="aio-cnt"><span>Terkirim: <b id="aio-cnt-sender">0</b></span><span>Gagal: <b id="aio-cnt-fail">0</b></span></div>
+      </div>
+      <div class="aio-agent-card" id="aio-card-boss" onclick="AIOFFICE.focus('boss')" style="border-left:3px solid var(--gold)">
+        <div class="aio-role" style="color:var(--gold)">👔 Bos — Rekap Hasil Trading</div>
+        <div class="aio-name">Yors · The Boss</div>
+        <div class="aio-status" id="aio-status-boss"><span class="aio-dot idle"></span>Menunggu hasil trade untuk direkap…</div>
+        <div class="aio-cnt"><span>Hasil dicatat: <b id="aio-cnt-boss">0</b></span><span>Rekap terkirim: <b id="aio-cnt-recap">0</b></span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Rekap dari Meja Bos — Hasil Trading Sinyal Bot
+        <span style="display:flex;gap:6px;align-items:center">
+          <label class="toggle-wrap" style="font-size:11px;color:var(--text3)" title="Kirim rekap otomatis ke Telegram setiap ada hasil trade baru (debounce 60 detik)">
+            <div class="toggle"><input type="checkbox" id="aio-autorecap" onchange="AIOFFICE.setAutoRecap(this.checked)"><div class="toggle-slider"></div></div>
+            <span>Auto-rekap TG</span>
+          </label>
+          <button class="btn btn-sm btn-green" onclick="AIOFFICE.sendRecap()">📤 Kirim Rekap ke Telegram</button>
+        </span>
+      </div>
+      <div id="aio-recap-grid" class="dash-grid-3" style="margin-bottom:0"><div class="empty">Belum ada data — rekap terisi otomatis saat bot mencatat sinyal &amp; hasil trade.</div></div>
+    </div>
+  </div><!-- end t-aioffice -->
+
 </div><!-- end dash -->
 </div><!-- end app -->
 
@@ -1164,7 +1239,7 @@ const fmtP = n => { const cfg = PAIR_CFG[activePairKey]; const dec = cfg?.dec||2
 const now = () => new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' });
 const nowShort = () => new Date().toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' });
 
-const CFG_KEY = 'xauusd_bot_cfg_v4';
+const CFG_KEY = 'btcusd_bot_cfg_v1';
 
 // ═══════════════════════════════════════════════════════
 //  SESSION / KILL ZONE ENGINE (v5 — DST-aware)
@@ -1213,10 +1288,15 @@ function sessionAnchorIndex(candles) {
 }
 
 function saveConfig(cfg) {
-  try { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); } catch {}
+  try {
+    localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+    localStorage.setItem('xauusd_bot_cfg_v4', JSON.stringify(cfg));
+  } catch {}
 }
 function loadConfig() {
-  try { return JSON.parse(localStorage.getItem(CFG_KEY)) || null; } catch { return null; }
+  try {
+    return JSON.parse(localStorage.getItem(CFG_KEY)) || JSON.parse(localStorage.getItem('xauusd_bot_cfg_v4')) || null;
+  } catch { return null; }
 }
 // v5 FIX: tombol "Hapus Data Tersimpan" memanggil clearSavedCfg() sejak v4
 //      tapi fungsinya tidak pernah ada — tambahkan implementasinya.
@@ -1305,12 +1385,12 @@ function startBot() {
   lrnInit();      // v5: pastikan DB belajar siap sebelum scoring (wFactor butuh ini)
   cbEvaluate();   // v5: inisialisasi status circuit breaker hari ini
 
-  // Mark XAU/USD as active pair box
+  // Mark BTC/USD as active pair box
   document.querySelectorAll('.pair-price-box').forEach(b => b.classList.remove('active-pair'));
-  const _initBox = $('pp-XAUUSD');
+  const _initBox = $('pp-BTCUSD');
   if (_initBox) _initBox.classList.add('active-pair');
   document.querySelectorAll('.pair-tab').forEach(t => t.classList.remove('active'));
-  const _initTab = $('pt-XAUUSD');
+  const _initTab = $('pt-BTCUSD');
   if (_initTab) _initTab.classList.add('active');
 
   // Show scalp status badge in topbar
@@ -1336,8 +1416,8 @@ function startBot() {
   setTimeout(() => { API_TRACKER.check(API_TRACKER.load().count); }, 500);
 
   // Init pair state for active pair
-  activePairKey = 'XAU/USD';
-  getPairState('XAU/USD'); // ensure created
+  activePairKey = 'BTC/USD';
+  getPairState('BTC/USD'); // ensure created
 
   // ── Initialize UI immediately ──
   connectWebSocket();
@@ -1364,9 +1444,9 @@ function startBot() {
     });
   }, ST.cfg.refreshMin * 60 * 1000));
 
-  // ── Start with XAU/USD data ──
-  setStatus('load', '🥇 XAU/USD: Mengambil data...');
-  bgEnqueue('XAU/USD');
+  // ── Start with BTC/USD data ──
+  setStatus('load', '₿ BTC/USD: Mengambil data...');
+  bgEnqueue('BTC/USD');
 
   // Auto-refresh handled by bgEnqueue interval above
   // Price fallback: every 2s if WS is stale
@@ -2141,15 +2221,15 @@ function calcAstro() {
   ];
   const inRetro = mercRetro.some(r => now2 >= r.start && now2 <= r.end);
 
-  // Gold seasonal tendency (historical average monthly bias)
+  // Bitcoin seasonal tendency (historical average monthly bias)
   const month = now2.getMonth(); // 0-indexed
   const seasonalBias = [
-    'Bullish', 'Bearish', 'Bearish', 'Bullish',  // Jan-Apr
-    'Neutral', 'Neutral', 'Bullish', 'Bullish',   // May-Aug
-    'Bullish', 'Bullish', 'Bearish', 'Neutral'    // Sep-Dec
+    'Bullish', 'Bullish', 'Bearish', 'Bullish',   // Jan-Apr (Q1 momentum)
+    'Bearish', 'Bearish', 'Neutral', 'Neutral',    // May-Aug (summer consolidation)
+    'Bearish', 'Bullish', 'Bullish', 'Bullish'     // Sep-Dec (Q4 historically strong)
   ][month];
 
-  // New/Full moon reversal window (gold tends to reverse ±2 days)
+  // New/Full moon reversal window (crypto tends to show increased volatility ±2 days)
   const nearNewMoon  = phase < 2 || phase > synodic - 2;
   const nearFullMoon = Math.abs(phase - 15) < 2;
   const reversalAlert = nearNewMoon || nearFullMoon;
@@ -2191,7 +2271,7 @@ const VT = {
   active: null // current open virtual trade
 };
 
-function vtSaveKey() { return 'xauusd_vt_v1'; }
+function vtSaveKey() { return 'btcusd_vt_v1'; }
 function vtLoad() { try { const d = JSON.parse(localStorage.getItem(vtSaveKey())); if (d) { VT.trades = d.trades||[]; VT.active = d.active||null; } } catch {} }
 function vtSave() { try { localStorage.setItem(vtSaveKey(), JSON.stringify({trades: VT.trades, active: VT.active})); } catch {} }
 
@@ -2374,22 +2454,22 @@ Data teknikal saat ini:
 Berikan analisa komprehensif dalam Bahasa Indonesia mencakup:
 
 **📊 MARKET OVERVIEW**
-Kondisi pasar gold global saat ini secara fundamental
+Kondisi pasar Bitcoin global saat ini secara fundamental
 
-**🏦 KEBIJAKAN MONETER & USD**
-Fed policy, suku bunga, ekspektasi pasar, DXY trend, data ekonomi AS terbaru
+**🏦 KEBIJAKAN MONETER & REGULASI**
+Fed policy, suku bunga, regulasi crypto terbaru (SEC/CFTC), Bitcoin Spot ETF flows, stablecoin supply
 
-**🌍 SENTIMEN GLOBAL & GEOPOLITIK**
-Risk sentiment, safe haven demand, konflik/ketegangan geopolitik, demand bank sentral
+**🌍 SENTIMEN GLOBAL & ON-CHAIN**
+Risk sentiment, whale wallet activity, exchange reserves/flows, BTC dominance, Fear & Greed Index, hash rate
 
-**📅 KALENDER EKONOMI KRITIS**
-Event/rilis data penting minggu ini yang bisa menggerakkan gold (NFP, CPI, FOMC, dll)
+**📅 KALENDER EKONOMI & CRYPTO EVENTS**
+Event/rilis data penting minggu ini yang menggerakkan BTC (FOMC, CPI, Deribit/CME BTC options expiry, protocol upgrades)
 
 **📰 NEWS TERKINI**
 Berita paling relevan untuk ${activePairKey} saat ini
 
 **🌙 ASTRO-EKONOMI**
-Korelasi lunar cycle dengan market: ${astro.moonPhase} historis sering memicu ${astro.moonBias === 'reversal' ? 'reversal harga' : astro.moonBias + ' pressure'}
+Korelasi lunar cycle dengan market crypto: ${astro.moonPhase} historis sering memicu ${astro.moonBias === 'reversal' ? 'reversal harga' : astro.moonBias + ' pressure'}
 
 **🎯 KESIMPULAN FUNDAMENTAL**
 Bias: BULLISH / BEARISH / NEUTRAL dengan level kunci ${ST.price ? '±' + (ST.price * 0.01).toFixed(0) : ''}
@@ -2542,7 +2622,7 @@ async function fetchPriceFallback() {
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 async function fetchTD(interval, sz = 200) {
-  const sym = encodeURIComponent(PAIR_CFG[activePairKey]?.tdSymbol || 'XAU/USD');
+  const sym = encodeURIComponent(PAIR_CFG[activePairKey]?.tdSymbol || 'BTC/USD');
   const url = `https://api.twelvedata.com/time_series?symbol=${sym}&interval=${interval}&outputsize=${sz}&apikey=${ST.cfg.k}`;
   const r = await fetch(url);
   const d = await r.json();
@@ -2899,7 +2979,7 @@ function marketRegime(cn) {
   const ranging  = adxVal < 18;
 
   // Historical volatility vs harga (v5: RELATIF — v4 pakai dolar absolut
-  // "AT>15/AT<5" yang salah makna saat harga gold berpindah level)
+  // "AT>15/AT<5" yang salah makna saat harga BTC berpindah level)
   const hvol = sigma * Math.sqrt(252) * 100; // annualized %
   const atrPct = cls[cls.length-1] ? AT / cls[cls.length-1] : 0;
   const volatility = atrPct > 0.004 ? 'high' : atrPct < 0.0015 ? 'low' : 'normal';
@@ -3103,7 +3183,7 @@ async function fetchHTFData() {
   const k = ST.cfg.k; if (!k) return;
   const fetchTF = async (interval, outputsize) => {
     try {
-      const _htfSym = encodeURIComponent(PAIR_CFG[activePairKey]?.tdSymbol || 'XAU/USD');
+      const _htfSym = encodeURIComponent(PAIR_CFG[activePairKey]?.tdSymbol || 'BTC/USD');
     const url = `https://api.twelvedata.com/time_series?symbol=${_htfSym}&interval=${interval}&outputsize=${outputsize}&apikey=${k}`;
       const r = await fetch(url);
       const d = await r.json();
@@ -3240,7 +3320,7 @@ async function fetchDXYCore(k) {
 }
 
 // ── COT CORE (v5: z-score 2 tahun — v4 pakai ±50K absolut yang membuat
-//    gold hampir selalu terbaca "LONG" → bias permanen, bukan informasi) ──
+//    BTC hampir selalu terbaca "LONG" → bias permanen, bukan informasi) ──
 async function fetchCOTCore(cotCode) {
   const url = `https://publicreporting.cftc.gov/resource/jun7-fc8e.json?cftc_commodity_code=${cotCode}&$order=report_date_as_yyyy_mm_dd DESC&$limit=110`;
   const r = await fetch(url);
@@ -3258,7 +3338,7 @@ async function fetchCOTCore(cotCode) {
   return { netSpec: latest, netComm: commNet, z, delta, bias, extreme, fallback: false, ts: d[0].report_date_as_yyyy_mm_dd || now() };
 }
 
-// ── YIELD CORE (v5: + REAL yield 10Y TIPS DFII10 — penggerak gold #1) ──
+// ── YIELD CORE (v5: + REAL yield 10Y TIPS DFII10 — penggerak aset berisiko) ──
 async function fetchYieldCore(k, fredKey) {
   const out = { val: 0, prev: 0, trend: 'neu', fallback: false, ts: null, real: { val: 0, trend: 'neu', available: false, ts: null } };
   let gotNominal = false;
@@ -3288,7 +3368,7 @@ async function fetchYieldCore(k, fredKey) {
       }
     } catch {}
   }
-  // Real yield 10Y (DFII10) — korelasi historis gold sangat negatif.
+  // Real yield 10Y (DFII10) — korelasi historis dengan aset berisiko seperti BTC.
   // fredgraph.json dapat diakses tanpa api key; key hanya cadangan.
   try {
     const url = fredKey
@@ -3557,7 +3637,7 @@ function updInstPanel() {
   if (db) {
     const d = FUND.dxy.dir;
     const cls = d==='up'?'ibear':d==='down'?'ibull':'ineu';
-    db.innerHTML = `<span class="inst-badge ${cls}">${FUND.dxy.fallback ? 'DXY N/A (fallback)' : d==='up'?'📈 DXY Rising → Bearish XAU':d==='down'?'📉 DXY Falling → Bullish XAU':'→ DXY Flat'}</span>`;
+    db.innerHTML = `<span class="inst-badge ${cls}">${FUND.dxy.fallback ? 'DXY N/A (fallback)' : d==='up'?'📈 DXY Rising → Bearish BTC':d==='down'?'📉 DXY Falling → Bullish BTC':'→ DXY Flat'}</span>`;
   }
   const cv = $('cot-bias-lbl'), cs = $('cot-sub'), csb = $('cot-spec-bar'), ccb = $('cot-comm-bar'), csn = $('cot-spec-net'), ccn = $('cot-comm-net');
   if (cv) {
@@ -3585,7 +3665,7 @@ function updInstPanel() {
   if (yb) {
     const t = FUND.realYield?.available ? FUND.realYield.trend : FUND.yield.trend; // prioritas real yield
     const src = FUND.realYield?.available ? 'Real Yield' : 'Yield';
-    yb.innerHTML = `<span class="inst-badge ${t==='rising'?'ibear':t==='falling'?'ibull':'ineu'}">${t==='rising'?`📈 ${src} Rising → Bearish XAU`:t==='falling'?`📉 ${src} Falling → Bullish XAU`:`→ ${src} Flat`}</span>`;
+    yb.innerHTML = `<span class="inst-badge ${t==='rising'?'ibear':t==='falling'?'ibull':'ineu'}">${t==='rising'?`📈 ${src} Rising → Bearish BTC`:t==='falling'?`📉 ${src} Falling → Bullish BTC`:`→ ${src} Flat`}</span>`;
   }
   const sv = $('sent-val'), ss = $('sent-sub'), sk = $('sent-keywords');
   if (sv) { sv.textContent = (FUND.news.score>0?'+':'')+FUND.news.score; sv.style.color = FUND.news.score>0?'var(--green)':FUND.news.score<0?'var(--red)':'var(--text2)'; }
@@ -3663,8 +3743,8 @@ function calcFundScore(dir, fund) {
   // DXY — hanya data nyata
   if (F.dxy?.val && !F.dxy.fallback) {
     const chg5 = (F.dxy.chg5d ?? 0);
-    if (dir==='buy'  && F.dxy.dir==='down') { score+=7; reasons.push(`DXY melemah ${chg5>=0?'+':''}${chg5.toFixed(2)} (5d) → Bullish XAU`); }
-    if (dir==='sell' && F.dxy.dir==='up')   { score+=7; reasons.push(`DXY menguat ${chg5>=0?'+':''}${chg5.toFixed(2)} (5d) → Bearish XAU`); }
+    if (dir==='buy'  && F.dxy.dir==='down') { score+=7; reasons.push(`DXY melemah ${chg5>=0?'+':''}${chg5.toFixed(2)} (5d) → Bullish BTC`); }
+    if (dir==='sell' && F.dxy.dir==='up')   { score+=7; reasons.push(`DXY menguat ${chg5>=0?'+':''}${chg5.toFixed(2)} (5d) → Bearish BTC`); }
     if (dir==='buy'  && F.dxy.dir==='up')   score-=3;
     if (dir==='sell' && F.dxy.dir==='down') score-=3;
   }
@@ -3684,16 +3764,16 @@ function calcFundScore(dir, fund) {
   const yld = (F.realYield?.available) ? F.realYield : (F.yield && !F.yield.fallback ? F.yield : null);
   if (yld && yld.val) {
     const lbl = F.realYield?.available ? 'Real yield' : 'Yield';
-    if (dir==='buy'  && yld.trend==='falling') { score+=7; reasons.push(`${lbl} turun (${yld.val.toFixed(2)}%) → Bullish XAU`); }
-    if (dir==='sell' && yld.trend==='rising')  { score+=7; reasons.push(`${lbl} naik (${yld.val.toFixed(2)}%) → Bearish XAU`); }
+    if (dir==='buy'  && yld.trend==='falling') { score+=7; reasons.push(`${lbl} turun (${yld.val.toFixed(2)}%) → Bullish BTC`); }
+    if (dir==='sell' && yld.trend==='rising')  { score+=7; reasons.push(`${lbl} naik (${yld.val.toFixed(2)}%) → Bearish BTC`); }
     if (dir==='buy'  && yld.trend==='rising')  score-=2;
     if (dir==='sell' && yld.trend==='falling') score-=2;
   }
   // News sentiment — hanya data nyata
   const sc = F.news?.fallback ? 0 : (F.news?.score || 0);
   if (sc !== 0) {
-    if (dir==='buy'  && sc>0) { score+=Math.min(sc*2,5); reasons.push(`News Sentiment Bullish XAU (+${sc})`); }
-    if (dir==='sell' && sc<0) { score+=Math.min(-sc*2,5); reasons.push(`News Sentiment Bearish XAU (${sc})`); }
+    if (dir==='buy'  && sc>0) { score+=Math.min(sc*2,5); reasons.push(`News Sentiment Bullish BTC (+${sc})`); }
+    if (dir==='sell' && sc<0) { score+=Math.min(-sc*2,5); reasons.push(`News Sentiment Bearish BTC (${sc})`); }
     if (dir==='buy'  && sc<0) score-=2;
     if (dir==='sell' && sc>0) score-=2;
   }
@@ -3808,8 +3888,8 @@ function scoreSignalV9(tfa, sr, fib, pats, sdz, ict, astro, ctx) {
   if (CX.htfPD) {
     const htfNear = [...(CX.htfPD.wOB||[]),...(CX.htfPD.dOB||[])].find(ob=>Math.abs(ob.mid-p)<AT*3);
     if (htfNear) {
-      if (htfNear.type==='bull') { bICT+=5; bR.push(`🥇 ${htfNear.tf} Demand OB — priority zone!`); }
-      else { sICT+=5; sR.push(`🥇 ${htfNear.tf} Supply OB — priority zone!`); }
+      if (htfNear.type==='bull') { bICT+=5; bR.push(`₿ ${htfNear.tf} Demand OB — priority zone!`); }
+      else { sICT+=5; sR.push(`₿ ${htfNear.tf} Supply OB — priority zone!`); }
     }
   }
   const bullFVG=ict?.fvgs?.find(f=>f.type==='bull'&&p>=f.low*0.9995&&p<=f.high*1.0005);
@@ -3907,7 +3987,7 @@ function scoreSignalV9(tfa, sr, fib, pats, sdz, ict, astro, ctx) {
 
   // ── Astro: ditampilkan di panel tapi TIDAK masuk scoring ─
   // Tidak ada bukti statistik bahwa lunar cycle/Mercury retrograde
-  // berkorelasi dengan pergerakan harga gold secara konsisten.
+  // berkorelasi dengan pergerakan harga BTC secara konsisten.
 
   // ── FUNDAMENTAL KEDUA SISI (v5 — sebelum keputusan!) ──
   const fundB = calcFundScore('buy', FD);
@@ -4572,20 +4652,19 @@ function calcLotSize() {
   const slPips = Math.abs(sig.entry - sig.sl);
   if (slPips <= 0) { if (lotEl) lotEl.textContent = '—'; return; }
 
-  // XAU/USD standar: 1 lot = 100 troy oz → pergerakan $1 = $100 per lot.
-  // Kerugian = slPips($) × 100 × lot  →  lot = riskUsd / (slPips × 100).
-  // (v5 FIX: sebelumnya ×10 — menghasilkan lot 10× terlalu besar / risiko 10%!)
-  const lotRaw = riskUsd / (slPips * 100);
-  const lot = Math.max(0.01, Math.floor(lotRaw * 100) / 100); // floor ke 0.01 agar risiko TIDAK melebihi target
+  // BTC/USD standar: 1 lot = 1 BTC → pergerakan $1 = $1 per lot (CFD / Spot).
+  // Kerugian = slPips($) × 1 × lot  →  lot = riskUsd / slPips.
+  const lotRaw = riskUsd / slPips;
+  const lot = Math.max(0.001, Math.floor(lotRaw * 1000) / 1000); // floor ke 0.001 BTC
 
   if (lotEl) {
-    lotEl.textContent = lot.toFixed(2) + ' lot';
-    lotEl.style.color = lot >= 0.10 ? 'var(--gold)' : 'var(--blue)';
+    lotEl.textContent = lot.toFixed(3) + ' BTC';
+    lotEl.style.color = lot >= 0.5 ? 'var(--gold)' : 'var(--blue)';
   }
 
   // Risiko efektif dari lot yang sudah dibulatkan ke bawah (transparansi)
   if (warnEl) {
-    const effRisk = lot * slPips * 100;
+    const effRisk = lot * slPips;
     const effPct  = (effRisk / balance * 100);
     window._psEffRisk = { effRisk, effPct, lot, slPips };
   }
@@ -4761,7 +4840,7 @@ async function sendTelegramSignal(sig, isManual = false) {
 
   // V9: Build institutional data row for TG
   const htfRow = `W:${ST.htfBias.weekly?.toUpperCase()||'?'} D:${ST.htfBias.daily?.toUpperCase()||'?'} H4:${ST.htfBias.h4?.toUpperCase()||'?'} H1:${ST.htfBias.h1?.toUpperCase()||'?'}`;
-  const _dxyBias = activePairKey === 'XAU/USD' ? (FUND.dxy.dir==='up'?'↑ Bearish XAU':FUND.dxy.dir==='down'?'↓ Bullish XAU':'→ Flat') : (FUND.dxy.dir==='up'?'↑ USD Strength':FUND.dxy.dir==='down'?'↓ USD Weakness':'→ Flat');
+  const _dxyBias = activePairKey === 'BTC/USD' ? (FUND.dxy.dir==='up'?'↑ Bearish BTC':FUND.dxy.dir==='down'?'↓ Bullish BTC':'→ Flat') : (FUND.dxy.dir==='up'?'↑ USD Strength':FUND.dxy.dir==='down'?'↓ USD Weakness':'→ Flat');
   const dxyRow  = FUND.dxy.val ? `DXY ${FUND.dxy.val.toFixed(2)} (${_dxyBias})` : 'DXY: —';
   const cotRow  = `COT: ${FUND.cot.bias} (Spec: ${FUND.cot.netSpec>0?'+':''}${Math.round(FUND.cot.netSpec/1000)}K)`;
   const yldRow  = FUND.realYield?.available ? `Real Y: ${FUND.realYield.val.toFixed(2)}% (${FUND.realYield.trend})${FUND.yield.val?` · Nom: ${FUND.yield.val.toFixed(2)}%`:''}` : (FUND.yield.val ? `Yield: ${FUND.yield.val.toFixed(2)}% (${FUND.yield.trend})` : 'Yield: —');
@@ -4933,7 +5012,7 @@ Bot siap mengirim signal otomatis! 🚀`;
 // ═══════════════════════════════════════════════════════
 
 // ── PERSISTENT STORAGE ─────────────────────────────────
-const DB_KEY = 'xauusd_bot_v2';
+const DB_KEY = 'btcusd_bot_v1';
 
 function dbLoad() {
   try { return JSON.parse(localStorage.getItem(DB_KEY)) || dbDefault(); }
@@ -5340,7 +5419,7 @@ function renderBacktest(st) {
 //     per-15-menit) — ini backtest sisi TEKNIKAL murni.
 //   • Entry di CLOSE bar sinyal (konservatif; zone-entry tidak
 //     dimodelkan menunggu limit fill).
-//   • Spread asumsi (default $0.35 XAU/USD) dipakai untuk guard.
+//   • Spread asumsi (default ~$15 BTC/USD) dipakai untuk guard.
 //   • TP1 → SL dinaikkan ke breakeven (manajemen realistis).
 //   • Dalam bar yang sama, SL diprioritaskan dulu (konservatif).
 //   • Timeout 96 bar (±24 jam) → ditutup di harga pasar.
@@ -5436,7 +5515,7 @@ async function runBacktestEngine(progressCb) {
   BT.running = true;
   try {
     const trades = [];
-    const spreadAssumed = ST.spread > 0 ? ST.spread : 0.35;
+    const spreadAssumed = ST.spread > 0 ? ST.spread : (activePairKey === 'BTC/USD' ? 15.0 : 0.35);
     const startIdx = Math.max(50, m15all.length - 400); // maks ±400 bar M15 (agar UI tidak freeze lama)
     let i = startIdx, cooldownUntil = -1, scanned = 0;
     while (i < m15all.length - 1) {
@@ -5748,7 +5827,7 @@ function exportData() {
   const blob = new Blob([JSON.stringify(LRN.db, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `xauusd_bot_data_${Date.now()}.json`;
+  a.download = `btcusd_bot_data_${Date.now()}.json`;
   a.click();
   toast('✅ Data diekspor!', 'success');
 }
@@ -6294,21 +6373,21 @@ window.addEventListener('DOMContentLoaded', () => {
 // ═══════════════════════════════════════════════════════
 
 const PAIR_CFG = {
-  'XAU/USD': { tdSymbol:'XAU/USD', wsSymbol:'XAU/USD', name:'Gold',        emoji:'🥇', dec:2, pre:'$',  col:'#d29922', cotCode:'088691' },
+  'BTC/USD': { tdSymbol:'BTC/USD', wsSymbol:'BTC/USD', name:'Bitcoin',     emoji:'₿',  dec:2, pre:'$',  col:'#f7931a', cotCode:'133741' },
 };
 
 // ── Per-pair isolated state (NEVER mixed into ST unless that pair is active) ──
 const PAIR_STATE = {};
-let activePairKey = 'XAU/USD';
+let activePairKey = 'BTC/USD';
 
 // Live prices for ALL pairs (from WS + REST fallback)
 const LIVE_PRICES = {
-  'XAU/USD':{ price:0, prev:0, bid:0, ask:0, ts:0, _lastFetch:0 },
+  'BTC/USD':{ price:0, prev:0, bid:0, ask:0, ts:0, _lastFetch:0 },
 };
 
 // Per-pair analysis cache (signal summary shown in overview panel)
 const PAIR_ANALYSIS = {
-  'XAU/USD':{ dir:'wait', prob:0, grade:'—', entry:0, sl:0, tp1:0, tp2:0, ts:null },
+  'BTC/USD':{ dir:'wait', prob:0, grade:'—', entry:0, sl:0, tp1:0, tp2:0, ts:null },
 };
 
 // Background fetch queue — processes one pair at a time, never touches active ST
@@ -6326,7 +6405,7 @@ function pairPre(key) { return PAIR_CFG[key || activePairKey]?.pre || '$'; }
 
 // ── Get or create isolated state for a pair ──
 function getPairState(key) {
-  if (!key) key = activePairKey || 'XAU/USD';
+  if (!key) key = activePairKey || 'BTC/USD';
   if (!PAIR_STATE[key]) {
     PAIR_STATE[key] = {
       data: { m1:[], m5:[], m15:[], h1:[], h4:[], d1:[], w1:[] },
@@ -6812,6 +6891,747 @@ async function fetchAllPairPricesFallback() {
 }
 
 console.log('📊 Yors Market Analysis v5.1 — engine v5.1: unified ctx scoring, DST-aware sessions, economic calendar, circuit breaker, backtest replay');
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     AI OFFICE MODULE v1.0 — Kantor AI Agent 3D (TAMBAHAN MURNI)
+     Tidak mengubah satu baris pun dari engine di atas. Semua integrasi
+     via wrapper aditif (perilaku asli selalu dijalankan lebih dulu).
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  // ── STATE ─────────────────────────────────────────────
+  const AIO = {
+    ready: false, mode3d: false, raf: null, watchdog: null,
+    autoRotate: true, camGoal: null, lastUserOrbit: 0,
+    orbit: { theta: 0.0, phi: 0.52, radius: 8.8, target: null },
+    stats: { analyzed: 0, signals: 0, sent: 0, fail: 0, outcomes: 0, recaps: 0 },
+    autoRecap: false, _recapTimer: null,
+    agents: {}, flights: [], animT: 0, lastScrUpd: 0, lastRecapUpd: 0,
+    sends: [],                     // riwayat kirim utk layar Rio
+    signPulse: 0
+  };
+  window.AIOFFICE = AIO;
+  const SKEY = 'yors_aio_stats_v1';
+  function loadPersist() {
+    try {
+      const s = JSON.parse(localStorage.getItem(SKEY) || 'null');
+      if (s && typeof s === 'object') Object.assign(AIO.stats, s.stats || {});
+      AIO.autoRecap = !!localStorage.getItem(SKEY + '_auto');
+    } catch (e) {}
+  }
+  function savePersist() {
+    try {
+      localStorage.setItem(SKEY, JSON.stringify({ stats: AIO.stats }));
+      if (AIO.autoRecap) localStorage.setItem(SKEY + '_auto', '1');
+      else localStorage.removeItem(SKEY + '_auto');
+    } catch (e) {}
+  }
+
+  // ── UTIL DOM ──────────────────────────────────────────
+  const $a = id => document.getElementById(id);
+  function setStatus(agent, cls, text) {
+    const el = $('aio-status-' + agent);
+    if (el) el.innerHTML = '<span class="aio-dot ' + (cls || 'idle') + '"></span>' + text;
+    if (AIO.agents[agent] && AIO.agents[agent].bubble) AIO.agents[agent].bubble.update(text);
+  }
+  function refreshCounters() {
+    const m = { 'aio-cnt-trader': AIO.stats.analyzed, 'aio-cnt-sig': AIO.stats.signals,
+                'aio-cnt-sender': AIO.stats.sent, 'aio-cnt-fail': AIO.stats.fail,
+                'aio-cnt-boss': AIO.stats.outcomes, 'aio-cnt-recap': AIO.stats.recaps };
+    for (const k in m) { const el = $(k); if (el) el.textContent = m[k]; }
+  }
+
+  // ── THREE.JS LOADER (CDN + fallback) ──────────────────
+  function loadThree(cb) {
+    if (window.THREE && window.THREE.Scene) return cb(true);
+    const urls = [
+      'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js',
+      'https://unpkg.com/three@0.128.0/build/three.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'
+    ];
+    let i = 0;
+    (function next() {
+      if (i >= urls.length) return cb(false);
+      const s = document.createElement('script');
+      s.src = urls[i++];
+      s.onload = function () { (window.THREE && window.THREE.Scene) ? cb(true) : next(); };
+      s.onerror = next;
+      document.head.appendChild(s);
+    })();
+  }
+
+  // ── KANVAS TEXTURE HELPER ─────────────────────────────
+  function makeCanvas(w, h) {
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    return { c, x: c.getContext('2d') };
+  }
+  function roundRect(x, a, b, w, h, r) {
+    x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r);
+    x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath();
+  }
+
+  // ── SCENE BUILD ───────────────────────────────────────
+  let renderer, scene, camera;
+  const V3 = (x, y, z) => new THREE.Vector3(x, y, z);
+
+  function buildScene() {
+    const wrap = $('aio-3d-wrap');
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    wrap.appendChild(renderer.domElement);
+
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0a0d12);
+    scene.fog = new THREE.Fog(0x0a0d12, 14, 26);
+    camera = new THREE.PerspectiveCamera(46, 1, 0.1, 100);
+
+    // Lampu
+    scene.add(new THREE.AmbientLight(0x8899bb, 0.55));
+    const dir = new THREE.DirectionalLight(0xfff4e0, 0.85);
+    dir.position.set(4, 8, 5); dir.castShadow = true;
+    dir.shadow.mapSize.set(1024, 1024);
+    dir.shadow.camera.left = -8; dir.shadow.camera.right = 8;
+    dir.shadow.camera.top = 8; dir.shadow.camera.bottom = -8;
+    scene.add(dir);
+    const lamp1 = new THREE.PointLight(0xa78bfa, 0.5, 12); lamp1.position.set(-2.5, 3.6, -1); scene.add(lamp1);
+    const lamp2 = new THREE.PointLight(0x60a5fa, 0.5, 12); lamp2.position.set(2.5, 3.6, -1); scene.add(lamp2);
+
+    // Ruangan: lantai + 2 dinding
+    const floorMat = new THREE.MeshStandardMaterial({ color: 0x2a2f3d, roughness: 0.85 });
+    const floor = new THREE.Mesh(new THREE.BoxGeometry(10.4, 0.2, 8.4), floorMat);
+    floor.position.set(0, -0.1, 0); floor.receiveShadow = true; scene.add(floor);
+    // karpet jalur tengah
+    const rug = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.03, 5.4),
+      new THREE.MeshStandardMaterial({ color: 0x3d2f4f, roughness: 1 }));
+    rug.position.set(0, 0.015, 0.4); rug.receiveShadow = true; scene.add(rug);
+    const wallMat = new THREE.MeshStandardMaterial({ color: 0x1c2230, roughness: 0.95, side: THREE.DoubleSide });
+    const backWall = new THREE.Mesh(new THREE.PlaneGeometry(10.4, 5), wallMat);
+    backWall.position.set(0, 2.5, -4.2); backWall.receiveShadow = true; scene.add(backWall);
+    const sideWall = new THREE.Mesh(new THREE.PlaneGeometry(8.4, 5), wallMat);
+    sideWall.rotation.y = Math.PI / 2; sideWall.position.set(-5.2, 2.5, 0); sideWall.receiveShadow = true; scene.add(sideWall);
+
+    // Logo dinding belakang
+    { const { c, x } = makeCanvas(1024, 160);
+      x.fillStyle = '#12182a'; roundRect(x, 4, 4, 1016, 152, 26); x.fill();
+      x.strokeStyle = 'rgba(167,139,250,.5)'; x.lineWidth = 4; roundRect(x, 4, 4, 1016, 152, 26); x.stroke();
+      x.fillStyle = '#a78bfa'; x.font = '700 68px sans-serif'; x.textAlign = 'center';
+      x.fillText('YORS AI TRADING FIRM', 512, 78);
+      x.fillStyle = '#8899b4'; x.font = '30px sans-serif';
+      x.fillText('24/7 AUTONOMOUS DESK · BTC/USD', 512, 126);
+      const t = new THREE.CanvasTexture(c);
+      const sign = new THREE.Mesh(new THREE.PlaneGeometry(4.6, 0.72), new THREE.MeshBasicMaterial({ map: t }));
+      sign.position.set(0, 3.1, -4.14); scene.add(sign); }
+
+    // Jendela kota malam (dinding kiri)
+    { const { c, x } = makeCanvas(512, 512);
+      const g = x.createLinearGradient(0, 0, 0, 512);
+      g.addColorStop(0, '#0d1f3c'); g.addColorStop(1, '#0a0d12'); x.fillStyle = g; x.fillRect(0, 0, 512, 512);
+      for (let i = 0; i < 90; i++) {
+        x.fillStyle = Math.random() > 0.5 ? 'rgba(251,191,36,.85)' : 'rgba(96,165,250,.8)';
+        x.fillRect(20 + Math.random() * 470, 150 + Math.random() * 340, 8 + Math.random() * 14, 6 + Math.random() * 10);
+      }
+      const t = new THREE.CanvasTexture(c);
+      const win = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 2.6), new THREE.MeshBasicMaterial({ map: t }));
+      win.rotation.y = Math.PI / 2; win.position.set(-5.13, 2.6, 0.4); scene.add(win); }
+
+    // Papan TELEGRAM di dinding (target animasi kiriman Rio)
+    { const { c, x } = makeCanvas(512, 256);
+      x.fillStyle = '#022c22'; roundRect(x, 6, 6, 500, 244, 40); x.fill();
+      x.strokeStyle = '#34d399'; x.lineWidth = 8; roundRect(x, 6, 6, 500, 244, 40); x.stroke();
+      x.fillStyle = '#34d399'; x.font = '120px sans-serif'; x.textAlign = 'center'; x.fillText('✈', 256, 130);
+      x.font = '700 44px sans-serif'; x.fillText('TELEGRAM BOT', 256, 205);
+      const t = new THREE.CanvasTexture(c);
+      const tg = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 0.75), new THREE.MeshBasicMaterial({ map: t, transparent: true }));
+      tg.position.set(3.6, 2.7, -4.1); scene.add(tg); AIO.tgSign = tg; }
+
+    // Tanaman hias
+    { const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.18, 0.4, 10),
+        new THREE.MeshStandardMaterial({ color: 0x7c4a2d, roughness: 1 }));
+      pot.position.set(-4.3, 0.2, 1.8); pot.castShadow = true; scene.add(pot);
+      for (let i = 0; i < 5; i++) {
+        const leaf = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.8 + Math.random() * 0.5, 6),
+          new THREE.MeshStandardMaterial({ color: 0x2ea043, roughness: 1 }));
+        leaf.position.set(-4.3 + (Math.random() - 0.5) * 0.3, 0.75 + Math.random() * 0.3, 1.8 + (Math.random() - 0.5) * 0.3);
+        leaf.rotation.set((Math.random() - .5) * .5, 0, (Math.random() - .5) * .5);
+        leaf.castShadow = true; scene.add(leaf);
+      } }
+
+    // ── MEJA + ORANG ──
+    AIO.agents.trader = buildDesk({ x: -2.5, z: -1.3, rot: 0.16, accent: 0x60a5fa, name: 'ALEX', role: 'trader' });
+    AIO.agents.sender = buildDesk({ x: 2.5, z: -1.3, rot: -0.16, accent: 0x34d399, name: 'RIO', role: 'sender' });
+    AIO.agents.boss = buildDesk({ x: 0, z: -3.1, rot: 0, accent: 0xfbbf24, name: 'BOS YORS', role: 'boss', big: true });
+
+    AIO.orbit.target = V3(0, 1.1, -0.9);
+    onResize();
+  }
+
+  // Meja kerja + komputer + orang duduk
+  function buildDesk(cfg) {
+    const g = new THREE.Group();
+    g.position.set(cfg.x, 0, cfg.z); g.rotation.y = cfg.rot;
+    const W = cfg.big ? 2.6 : 2.0, D = cfg.big ? 1.2 : 0.95, H = 0.78;
+    const woodMat = new THREE.MeshStandardMaterial({ color: cfg.big ? 0x4a3a2a : 0x37414f, roughness: 0.7 });
+    const top = new THREE.Mesh(new THREE.BoxGeometry(W, 0.07, D), woodMat);
+    top.position.y = H; top.castShadow = true; top.receiveShadow = true; g.add(top);
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, H, 8),
+        new THREE.MeshStandardMaterial({ color: 0x21262f, roughness: 0.6, metalness: 0.4 }));
+      leg.position.set(sx * (W / 2 - 0.12), H / 2, sz * (D / 2 - 0.1)); leg.castShadow = true; g.add(leg);
+    });
+
+    // Monitor (menghadap orang = arah -z lokal... orang duduk di sisi -z? tidak:
+    // orang di sisi +z menghadap -z → layar menghadap +z ke arah orang)
+    const scr = makeCanvas(256, 160);
+    const scrTex = new THREE.CanvasTexture(scr.c);
+    const monFrame = new THREE.Mesh(new THREE.BoxGeometry(0.98, 0.64, 0.06),
+      new THREE.MeshStandardMaterial({ color: 0x11151d, roughness: 0.4 }));
+    monFrame.position.set(0, H + 0.42, -D / 2 + 0.18); monFrame.castShadow = true; g.add(monFrame);
+    const screen = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.56),
+      new THREE.MeshBasicMaterial({ map: scrTex }));
+    screen.position.set(0, H + 0.42, -D / 2 + 0.215); g.add(screen);
+    const stand = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.05, 0.16, 8),
+      new THREE.MeshStandardMaterial({ color: 0x11151d }));
+    stand.position.set(0, H + 0.1, -D / 2 + 0.18); g.add(stand);
+
+    // Keyboard + mouse + mug
+    const kb = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.02, 0.16),
+      new THREE.MeshStandardMaterial({ color: 0x1a1f29 }));
+    kb.position.set(0, H + 0.045, -D / 2 + 0.52); g.add(kb);
+    const mug = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.045, 0.1, 10),
+      new THREE.MeshStandardMaterial({ color: cfg.accent, roughness: 0.5 }));
+    mug.position.set(W / 2 - 0.22, H + 0.06, -D / 2 + 0.5); mug.castShadow = true; g.add(mug);
+    if (cfg.big) { // dokumen di meja bos
+      for (let i = 0; i < 3; i++) {
+        const pp = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.005, 0.22),
+          new THREE.MeshStandardMaterial({ color: 0xe2e8f0 }));
+        pp.position.set(-0.6 + i * 0.08, H + 0.041 + i * 0.005, -D / 2 + 0.58);
+        pp.rotation.y = (i - 1) * 0.3; g.add(pp);
+      }
+    }
+
+    // ── ORANG ──
+    const skin = 0xd9a066;
+    const person = new THREE.Group();
+    const shirtMat = new THREE.MeshStandardMaterial({
+      color: cfg.role === 'trader' ? 0x2563eb : cfg.role === 'sender' ? 0x059669 : 0x171a21,
+      roughness: 0.8 });
+    const torso = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.62, 0.3), shirtMat);
+    torso.position.y = 0.98; torso.castShadow = true; person.add(torso);
+    if (cfg.role === 'boss') { // dasi emas
+      const tie = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.34, 0.02),
+        new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.3, metalness: 0.6 }));
+      tie.position.set(0, 1.02, 0.16); person.add(tie);
+    }
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.17, 18, 16),
+      new THREE.MeshStandardMaterial({ color: skin, roughness: 0.7 }));
+    head.position.y = 1.48; head.castShadow = true; person.add(head);
+    const hair = new THREE.Mesh(new THREE.SphereGeometry(0.175, 18, 12, 0, Math.PI * 2, 0, Math.PI / 2),
+      new THREE.MeshStandardMaterial({ color: cfg.role === 'boss' ? 0x1c1917 : 0x27272a, roughness: 1 }));
+    hair.position.y = 1.5; person.add(hair);
+    // lengan (pivot bahu)
+    function arm(side) {
+      const shoulder = new THREE.Group();
+      shoulder.position.set(side * 0.32, 1.22, 0);
+      const upper = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.34, 0.13), shirtMat);
+      upper.position.y = -0.17; upper.castShadow = true; shoulder.add(upper);
+      const hand = new THREE.Mesh(new THREE.SphereGeometry(0.065, 10, 8),
+        new THREE.MeshStandardMaterial({ color: skin }));
+      hand.position.set(0, -0.38, 0.08); shoulder.add(hand);
+      shoulder.rotation.x = 0.55; // default: tangan ke arah keyboard
+      person.add(shoulder);
+      return shoulder;
+    }
+    const armL = arm(-1), armR = arm(1);
+    // kaki (sem terlihat di belakang meja)
+    const legMat = new THREE.MeshStandardMaterial({ color: 0x1e2430, roughness: 0.9 });
+    [-0.13, 0.13].forEach(sx => {
+      const thigh = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.12, 0.42), legMat);
+      thigh.position.set(sx, 0.62, 0.18); person.add(thigh);
+      const shin = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.5, 0.15), legMat);
+      shin.position.set(sx, 0.32, 0.34); person.add(shin);
+    });
+    // kursi
+    const chairMat = new THREE.MeshStandardMaterial({ color: 0x14181f, roughness: 0.8 });
+    const seat = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.07, 0.48), chairMat);
+    seat.position.set(0, 0.58, 0.22); seat.castShadow = true; g.add(seat);
+    const backr = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.55, 0.07), chairMat);
+    backr.position.set(0, 0.9, 0.48); backr.castShadow = true; g.add(backr);
+    const post = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.55, 8),
+      new THREE.MeshStandardMaterial({ color: 0x2a303c, metalness: 0.5, roughness: 0.4 }));
+    post.position.set(0, 0.3, 0.22); g.add(post);
+    person.position.set(0, 0, 0.2); // duduk di kursi
+    g.add(person);
+
+    // Balon status di atas kepala
+    const bub = makeCanvas(512, 132);
+    const bubTex = new THREE.CanvasTexture(bub.c);
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: bubTex, depthTest: false, transparent: true }));
+    sprite.scale.set(1.9, 0.5, 1); sprite.position.set(0, 2.05, 0); g.add(sprite);
+    let lastTxt = '';
+    const bubble = {
+      update(txt) {
+        if (txt === lastTxt) return; lastTxt = txt;
+        const x = bub.x; x.clearRect(0, 0, 512, 132);
+        x.fillStyle = 'rgba(13,18,28,.92)'; roundRect(x, 6, 6, 500, 96, 24); x.fill();
+        x.strokeStyle = '#' + (cfg.role === 'trader' ? '60a5fa' : cfg.role === 'sender' ? '34d399' : 'fbbf24');
+        x.lineWidth = 4; roundRect(x, 6, 6, 500, 96, 24); x.stroke();
+        x.fillStyle = x.strokeStyle; x.font = '700 34px sans-serif'; x.textAlign = 'left';
+        x.fillText(cfg.name, 26, 46);
+        x.fillStyle = '#c9d4e6'; x.font = '28px sans-serif';
+        let t = txt.replace(/<[^>]*>/g, '');
+        if (t.length > 34) t = t.slice(0, 33) + '…';
+        x.fillText(t, 26, 84);
+        x.fillStyle = x.strokeStyle; // ekor balon
+        x.beginPath(); x.moveTo(240, 102); x.lineTo(272, 102); x.lineTo(256, 128); x.closePath(); x.fill();
+        bubTex.needsUpdate = true;
+      }
+    };
+    bubble.update('Siap…');
+
+    return { group: g, person, head, armL, armR, screen: scr, screenTex: scrTex,
+             bubble, accent: cfg.accent, role: cfg.role,
+             mode: 'idle', modeUntil: 0, phase: Math.random() * 6 };
+  }
+
+  // ── LAYAR DINAMIS PER AGEN ────────────────────────────
+  function drawTraderScreen(a) {
+    const x = a.screen.x, W = 256, H = 160;
+    x.fillStyle = '#0b1220'; x.fillRect(0, 0, W, H);
+    x.strokeStyle = '#1e2636'; x.strokeRect(2, 2, W - 4, H - 4);
+    x.fillStyle = '#4f6080'; x.font = '11px monospace'; x.textAlign = 'left';
+    x.fillText('BTC/USD · LIVE ANALYSIS', 10, 18);
+    const p = (typeof ST !== 'undefined' && ST.price) || 0;
+    x.fillStyle = '#fbbf24'; x.font = '700 26px monospace';
+    x.fillText(p ? '$' + p.toFixed(2) : '$—', 10, 48);
+    const sig = (typeof ST !== 'undefined') ? ST.lastSig : null;
+    const bP = sig ? Math.min(sig.bP || 0, 100) : 0, sP = sig ? Math.min(sig.sP || 0, 100) : 0;
+    x.fillStyle = '#34d399'; x.font = '12px monospace'; x.fillText('BUY  ' + bP.toFixed(0) + '%', 10, 78);
+    x.fillStyle = '#022c22'; x.fillRect(70, 68, 170, 12); x.fillStyle = '#34d399'; x.fillRect(70, 68, bP * 1.7, 12);
+    x.fillStyle = '#f87171'; x.font = '12px monospace'; x.fillText('SELL ' + sP.toFixed(0) + '%', 10, 100);
+    x.fillStyle = '#2c0a0a'; x.fillRect(70, 90, 170, 12); x.fillStyle = '#f87171'; x.fillRect(70, 90, sP * 1.7, 12);
+    // mini candlestick
+    x.fillStyle = '#4f6080'; x.font = '11px monospace'; x.fillText('M15', 10, 122);
+    for (let i = 0; i < 14; i++) {
+      const up = ((i * 7919) % 13) > 6;
+      x.fillStyle = up ? '#34d399' : '#f87171';
+      const bx = 46 + i * 15, hgt = 8 + ((i * 677) % 22);
+      x.fillRect(bx, 150 - hgt, 5, hgt); x.fillRect(bx + 1.5, 150 - hgt - 4, 2, hgt + 8);
+    }
+    a.screenTex.needsUpdate = true;
+  }
+  function drawSenderScreen(a) {
+    const x = a.screen.x, W = 256, H = 160;
+    x.fillStyle = '#0c1a14'; x.fillRect(0, 0, W, H);
+    x.strokeStyle = '#1e2636'; x.strokeRect(2, 2, W - 4, H - 4);
+    x.fillStyle = '#34d399'; x.font = '700 12px monospace'; x.textAlign = 'left';
+    x.fillText('✈ TELEGRAM DISPATCHER', 10, 18);
+    const rows = AIO.sends.slice(0, 4);
+    if (!rows.length) { x.fillStyle = '#4f6080'; x.font = '11px monospace'; x.fillText('menunggu sinyal…', 12, 52); }
+    rows.forEach((s, i) => {
+      const y = 36 + i * 30;
+      x.fillStyle = 'rgba(52,211,153,.12)'; roundRect(x, 8, y - 12, 240, 26, 8); x.fill();
+      x.fillStyle = '#34d399'; x.font = '700 11px monospace'; x.fillText(s.tag, 16, y + 2);
+      x.fillStyle = '#8899b4'; x.font = '10px monospace'; x.fillText(s.time + ' WIB', 16, y + 13);
+      x.fillStyle = s.ok ? '#34d399' : '#f87171'; x.textAlign = 'right'; x.fillText(s.ok ? '✓ SENT' : '✗ FAIL', 240, y + 4); x.textAlign = 'left';
+    });
+    a.screenTex.needsUpdate = true;
+  }
+  function drawBossScreen(a) {
+    const x = a.screen.x, W = 256, H = 160;
+    x.fillStyle = '#161206'; x.fillRect(0, 0, W, H);
+    x.strokeStyle = '#1e2636'; x.strokeRect(2, 2, W - 4, H - 4);
+    x.fillStyle = '#fbbf24'; x.font = '700 12px monospace'; x.textAlign = 'left';
+    x.fillText('👔 PERFORMANCE RECAP', 10, 18);
+    const r = computeRecap();
+    x.fillStyle = '#e2e8f0'; x.font = '11px monospace';
+    x.fillText('Signals: ' + r.all.total + '  Done: ' + r.all.closed, 10, 40);
+    x.fillStyle = r.all.wr >= 50 ? '#34d399' : '#f87171';
+    x.fillText('Win Rate: ' + (r.all.closed ? r.all.wr.toFixed(0) + '%' : '—'), 10, 58);
+    x.fillStyle = r.all.totalR >= 0 ? '#34d399' : '#f87171';
+    x.fillText('Total PnL: ' + (r.all.totalR >= 0 ? '+' : '') + r.all.totalR.toFixed(1) + 'R', 10, 76);
+    // equity curve
+    x.strokeStyle = 'rgba(251,191,36,.25)'; x.beginPath(); x.moveTo(10, 150); x.lineTo(246, 150); x.stroke();
+    if (r.equity.length > 1) {
+      x.strokeStyle = r.all.totalR >= 0 ? '#34d399' : '#f87171'; x.lineWidth = 2; x.beginPath();
+      const max = Math.max(...r.equity, 1), min = Math.min(...r.equity, -1);
+      r.equity.forEach((v, i) => {
+        const px = 12 + i * (232 / (r.equity.length - 1));
+        const py = 148 - ((v - min) / (max - min || 1)) * 34;
+        i ? x.lineTo(px, py) : x.moveTo(px, py);
+      });
+      x.stroke(); x.lineWidth = 1;
+    }
+    a.screenTex.needsUpdate = true;
+  }
+
+  // ── ANIMASI UTAH ──────────────────────────────────────
+  function animate(ts) {
+    AIO.raf = null;
+    if (!tabActive()) return;
+    AIO.raf = requestAnimationFrame(animate);
+    const t = ts / 1000;
+    AIO.animT = t;
+
+    for (const key in AIO.agents) {
+      const a = AIO.agents[key];
+      // pernapasan + head sway
+      a.person.scale.y = 1 + Math.sin(t * 1.7 + a.phase) * 0.008;
+      a.head.rotation.y = Math.sin(t * 0.6 + a.phase) * 0.18;
+      a.head.rotation.x = a.mode === 'review' ? 0.32 : Math.sin(t * 0.9 + a.phase) * 0.05;
+      if (a.mode === 'work' || a.mode === 'idle') {
+        // mengetik
+        const spd = a.mode === 'work' ? 11 : 3;
+        a.armL.rotation.x = 0.55 + Math.max(0, Math.sin(t * spd + a.phase)) * 0.12;
+        a.armR.rotation.x = 0.55 + Math.max(0, Math.sin(t * spd + a.phase + Math.PI)) * 0.12;
+      } else if (a.mode === 'send') {
+        a.armR.rotation.x = -1.9 + Math.sin(t * 14) * 0.1; // angkat tangan kanan
+        a.armL.rotation.x = 0.55;
+      } else if (a.mode === 'present') {
+        a.armR.rotation.x = -1.6 + Math.sin(t * 3) * 0.15;
+        a.armL.rotation.x = 0.55;
+      } else if (a.mode === 'clap') {
+        a.armR.rotation.x = -0.9; a.armL.rotation.x = -0.9;
+        a.armR.rotation.z = Math.sin(t * 16) * 0.25 - 0.3;
+        a.armL.rotation.z = -(Math.sin(t * 16) * 0.25 - 0.3);
+      }
+      if (a.mode !== 'idle' && a.mode !== 'work' && ts > a.modeUntil) {
+        a.mode = (typeof ST !== 'undefined' && ST.running) ? 'work' : 'idle';
+        a.armL.rotation.z = 0; a.armR.rotation.z = 0;
+      }
+    }
+
+    // Pesan terbang Rio → papan Telegram
+    for (let i = AIO.flights.length - 1; i >= 0; i--) {
+      const f = AIO.flights[i];
+      const k = Math.min(1, (ts - f.t0) / f.dur);
+      const u = 1 - k;
+      f.mesh.position.set(
+        u * u * f.from.x + 2 * u * k * f.ctrl.x + k * k * f.to.x,
+        u * u * f.from.y + 2 * u * k * f.ctrl.y + k * k * f.to.y,
+        u * u * f.from.z + 2 * u * k * f.ctrl.z + k * k * f.to.z
+      );
+      f.mesh.material.opacity = k > 0.85 ? (1 - k) / 0.15 : 1;
+      if (k >= 1) { scene.remove(f.mesh); AIO.flights.splice(i, 1); AIO.signPulse = 1; }
+    }
+    if (AIO.tgSign) {
+      AIO.signPulse = Math.max(0, AIO.signPulse - 0.02);
+      const s = 1 + AIO.signPulse * 0.18;
+      AIO.tgSign.scale.set(s, s, 1);
+    }
+
+    // Layar refresh (maks 2fps utk hemat CPU)
+    if (ts - AIO.lastScrUpd > 500) {
+      AIO.lastScrUpd = ts;
+      drawTraderScreen(AIO.agents.trader);
+      drawSenderScreen(AIO.agents.sender);
+      drawBossScreen(AIO.agents.boss);
+    }
+
+    // Kamera
+    const o = AIO.orbit;
+    if (AIO.autoRotate && performance.now() - AIO.lastUserOrbit > 5000 && !AIO.camGoal) {
+      o.theta += 0.0016;
+    }
+    if (AIO.camGoal) { // fokus halus ke agen
+      camera.position.lerp(AIO.camGoal.pos, 0.06);
+      o.target.lerp(AIO.camGoal.target, 0.06);
+      if (camera.position.distanceTo(AIO.camGoal.pos) < 0.05) AIO.camGoal = null;
+    } else {
+      const px = o.target.x + o.radius * Math.sin(o.phi) * Math.sin(o.theta);
+      const py = o.target.y + o.radius * Math.cos(o.phi);
+      const pz = o.target.z + o.radius * Math.sin(o.phi) * Math.cos(o.theta);
+      camera.position.set(px, py, pz);
+    }
+    camera.lookAt(o.target);
+    renderer.render(scene, camera);
+  }
+
+  function tabActive() {
+    const el = $('t-aioffice');
+    return AIO.ready && el && el.classList.contains('active') && document.visibilityState === 'visible';
+  }
+
+  function onResize() {
+    if (!renderer) return;
+    const wrap = $('aio-3d-wrap');
+    const w = wrap.clientWidth || 800, h = wrap.clientHeight || 480;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+
+  // ── KONTROL KAMERA (drag + zoom) ──────────────────────
+  function bindCamControls() {
+    const wrap = $('aio-3d-wrap');
+    let down = false, lx = 0, ly = 0;
+    wrap.addEventListener('pointerdown', e => { down = true; lx = e.clientX; ly = e.clientY; AIO.lastUserOrbit = performance.now(); AIO.camGoal = null; });
+    window.addEventListener('pointermove', e => {
+      if (!down) return;
+      const dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
+      AIO.orbit.theta -= dx * 0.006;
+      AIO.orbit.phi = Math.max(0.15, Math.min(1.35, AIO.orbit.phi - dy * 0.004));
+      AIO.lastUserOrbit = performance.now();
+    });
+    window.addEventListener('pointerup', () => down = false);
+    wrap.addEventListener('wheel', e => {
+      e.preventDefault();
+      AIO.orbit.radius = Math.max(3.5, Math.min(15, AIO.orbit.radius + e.deltaY * 0.004));
+      AIO.lastUserOrbit = performance.now();
+    }, { passive: false });
+    window.addEventListener('resize', onResize);
+  }
+
+  // ── REKAP (data dari LRN.db — baca saja) ──────────────
+  function todayWIB() { try { return new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Jakarta' }); } catch (e) { return ''; } }
+  function computeRecap() {
+    const out = { all: { total: 0, closed: 0, tp2: 0, tp1: 0, sl: 0, be: 0, pend: 0, wr: 0, totalR: 0 },
+                  today: { total: 0, closed: 0, tp2: 0, tp1: 0, sl: 0, be: 0, pend: 0, wr: 0, totalR: 0 }, equity: [] };
+    try {
+      const sigs = (typeof LRN !== 'undefined' && LRN.db && LRN.db.signals) || [];
+      const t0 = todayWIB();
+      let cum = 0;
+      sigs.forEach(s => {
+        const isToday = t0 && s.ts && s.ts.startsWith(t0);
+        ['all', isToday ? 'today' : null].forEach(b => {
+          if (!b) return; const d = out[b];
+          d.total++;
+          if (s.outcome === 'tp2') d.tp2++; else if (s.outcome === 'tp1') d.tp1++;
+          else if (s.outcome === 'sl') d.sl++; else if (s.outcome === 'be') d.be++;
+          else d.pend++;
+          if (s.outcome && s.outcome !== 'pending') { d.closed++; d.totalR += (s.pnlR || 0); }
+        });
+        if (s.outcome && s.outcome !== 'pending') { cum += (s.pnlR || 0); out.equity.push(+cum.toFixed(2)); }
+      });
+      [out.all, out.today].forEach(d => {
+        const wins = d.tp2 + d.tp1 * 0.5, n = d.tp2 + d.tp1 + d.sl;
+        d.wr = n ? wins / n * 100 : 0;
+        d.totalR = +(d.totalR || 0).toFixed(2);
+      });
+    } catch (e) {}
+    return out;
+  }
+  function renderRecapGrid() {
+    const el = $('aio-recap-grid'); if (!el) return;
+    const r = computeRecap();
+    if (!r.all.total) { el.innerHTML = '<div class="empty">Belum ada data — rekap terisi otomatis saat bot mencatat sinyal &amp; hasil trade.</div>'; return; }
+    const cell = (lbl, v, col) => '<div class="stat-card"><div class="stat-label">' + lbl + '</div><div class="stat-val" style="font-size:20px;color:' + (col || 'var(--text)') + '">' + v + '</div></div>';
+    el.innerHTML =
+      cell('SINYAL HARI INI', r.today.total, 'var(--blue)') +
+      cell('SELESAI HARI INI', r.today.closed) +
+      cell('TP2 / TP1 / SL (hari)', r.today.tp2 + ' / ' + r.today.tp1 + ' / ' + r.today.sl,
+           'var(--' + (r.today.sl > r.today.tp2 + r.today.tp1 ? 'red' : 'green') + ')') +
+      cell('PnL HARI INI', (r.today.totalR >= 0 ? '+' : '') + r.today.totalR + 'R',
+           r.today.totalR >= 0 ? 'var(--green)' : 'var(--red)') +
+      cell('WIN RATE (semua)', r.all.closed ? r.all.wr.toFixed(0) + '%' : '—',
+           r.all.wr >= 50 ? 'var(--green)' : 'var(--red)') +
+      cell('TOTAL PnL (semua)', (r.all.totalR >= 0 ? '+' : '') + r.all.totalR + 'R',
+           r.all.totalR >= 0 ? 'var(--green)' : 'var(--red)');
+  }
+  function recapMessage(r) {
+    const line = (t, d) =>
+      '\n━━━ ' + t + ' ━━━\n' +
+      'Sinyal: ' + d.total + ' · Selesai: ' + d.closed + ' · Pending: ' + d.pend + '\n' +
+      '✅ TP2: ' + d.tp2 + ' · 🟡 TP1: ' + d.tp1 + ' · ❌ SL: ' + d.sl + ' · ⚪ BE: ' + d.be + '\n' +
+      'Win Rate: ' + (d.closed ? d.wr.toFixed(0) + '%' : '—') + ' · PnL: ' + (d.totalR >= 0 ? '+' : '') + d.totalR + 'R';
+    return '👔 <b>REKAP BOS — Yors AI Trading Firm</b>\n' +
+      '📊 Hasil trading dari sinyal bot:' + line('HARI INI (WIB)', r.today) + line('SEMUA WAKTU', r.all) +
+      '\n\n🤖 Alex menganalisa: ' + AIO.stats.analyzed + ' · Rio mengirim: ' + AIO.stats.sent + ' sinyal' +
+      '\n⏰ ' + (typeof now === 'function' ? now() : new Date().toLocaleString('id-ID')) + ' WIB\n⚠️ Bukan saran investasi';
+  }
+
+  // ── EVENT ENGINE → OFFICE ─────────────────────────────
+  function wibTime() { try { return nowShort(); } catch (e) { return ''; } }
+  function senderEvent(tag, ok) {
+    AIO.sends.unshift({ tag: tag, ok: ok, time: wibTime() });
+    if (AIO.sends.length > 6) AIO.sends.pop();
+    if (ok) {
+      AIO.stats.sent++;
+      const a = AIO.agents.sender;
+      if (a) { a.mode = 'send'; a.modeUntil = performance.now() + 1400; spawnFlight(); }
+      setStatus('sender', 'busy', tag + ' terkirim ✓');
+      setTimeout(() => setStatus('sender', ST && ST.running ? 'work' : 'idle', 'Siap — menunggu sinyal berikutnya…'), 2600);
+    } else {
+      AIO.stats.fail++;
+      setStatus('sender', 'idle', '❌ ' + tag + ' gagal — dicoba ulang otomatis');
+    }
+    savePersist(); refreshCounters();
+  }
+  function spawnFlight() {
+    try {
+      const a = AIO.agents.sender;
+      const from = V3(a.group.position.x, 1.35, a.group.position.z - 0.6);
+      const to = V3(3.6, 2.7, -4.05);
+      const ctrl = from.clone().lerp(to, 0.5); ctrl.y = 3.4;
+      const { c, x } = makeCanvas(64, 64);
+      x.fillStyle = '#34d399'; roundRect(x, 4, 10, 56, 44, 14); x.fill();
+      x.fillStyle = '#022c22'; x.font = '700 30px sans-serif'; x.textAlign = 'center'; x.fillText('✈', 32, 44);
+      const m = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthTest: false }));
+      m.scale.set(0.42, 0.42, 1); m.position.copy(from); scene.add(m);
+      AIO.flights.push({ mesh: m, from: from, ctrl: ctrl, to: to, t0: performance.now(), dur: 1300 });
+    } catch (e) {}
+  }
+  function traderEvent(sig) {
+    AIO.stats.analyzed++;
+    if (sig && sig.isScalp === false) AIO.stats.signals++;
+    const a = AIO.agents.trader;
+    if (a) { a.mode = 'work'; }
+    const dir = sig && sig.dir === 'buy' ? '▲ BUY' : sig && sig.dir === 'sell' ? '▼ SELL' : '—';
+    const prob = sig ? ((sig.prob !== undefined && sig.prob !== null && !isNaN(sig.prob)) ? sig.prob : (sig.dir === 'buy' ? sig.bP : sig.sP) || 0) : 0;
+    const tag = sig && sig.isScalp ? ('Scalp ' + (sig.scalp_tf || '').toUpperCase()) : 'Sinyal utama';
+    setStatus('trader', 'busy', tag + ' ' + dir + ' ' + prob.toFixed(0) + '% → diteruskan ke Rio');
+    setTimeout(() => { if (ST && ST.running) setStatus('trader', 'work', 'Menganalisa M1–H4… harga ' + (ST.price ? '$' + ST.price.toFixed(2) : '…')); }, 3200);
+    savePersist(); refreshCounters();
+  }
+  function bossEvent(outcome) {
+    AIO.stats.outcomes++;
+    const a = AIO.agents.boss;
+    if (a) {
+      a.mode = outcome === 'tp2' ? 'clap' : 'present';
+      a.modeUntil = performance.now() + (outcome === 'tp2' ? 1600 : 2400);
+    }
+    const lbl = outcome === 'tp2' ? '🎉 TP2! Bagus, tim.' : outcome === 'tp1' ? '👍 TP1 tercatat' :
+                outcome === 'sl' ? '📉 SL — evaluasi besok' : '⚪ BE tercatat';
+    setStatus('boss', 'busy', lbl);
+    setTimeout(() => setStatus('boss', 'work', 'Mengawasi performa & menyiapkan rekap…'), 3000);
+    renderRecapGrid();
+    savePersist(); refreshCounters();
+    if (AIO.autoRecap) scheduleAutoRecap();
+  }
+  function scheduleAutoRecap() {
+    if (AIO._recapTimer) clearTimeout(AIO._recapTimer);
+    AIO._recapTimer = setTimeout(() => AIOFFICE.sendRecap(true), 60000);
+  }
+
+  // ── API PUBLIK ────────────────────────────────────────
+  AIOFFICE.onShow = function () {
+    if (!AIO.ready) init();
+    renderRecapGrid(); refreshCounters();
+    setTimeout(onResize, 60); // aspect kamera benar setelah tab terlihat
+    if (!AIO.raf && AIO.mode3d) AIO.raf = requestAnimationFrame(animate);
+    const ar = $('aio-autorecap'); if (ar) ar.checked = AIO.autoRecap;
+  };
+  AIOFFICE.focus = function (who) {
+    if (!AIO.mode3d || !AIO.agents[who]) return;
+    const a = AIO.agents[who];
+    const p = a.group.position;
+    const goalPos = V3(p.x * 0.35, 2.6, p.z + 4.4);
+    AIO.camGoal = { pos: goalPos, target: V3(p.x, 1.15, p.z) };
+    AIO.lastUserOrbit = performance.now();
+  };
+  AIOFFICE.resetCam = function () {
+    if (!AIO.mode3d) return;
+    AIO.camGoal = { pos: V3(0, 4.2, 7.4), target: V3(0, 1.1, -0.9) };
+    AIO.orbit.target = V3(0, 1.1, -0.9);
+    AIO.lastUserOrbit = performance.now();
+  };
+  AIOFFICE.toggleRotate = function () {
+    AIO.autoRotate = !AIO.autoRotate;
+    const b = $('aio-rotate-btn'); if (b) b.textContent = '🔄 Rotasi: ' + (AIO.autoRotate ? 'ON' : 'OFF');
+  };
+  AIOFFICE.setAutoRecap = function (v) {
+    AIO.autoRecap = !!v; savePersist();
+    if (v) scheduleAutoRecap(); else if (AIO._recapTimer) clearTimeout(AIO._recapTimer);
+  };
+  AIOFFICE.sendRecap = async function (auto) {
+    try {
+      if (typeof tgSend !== 'function') { toast('Bot belum berjalan', 'error'); return; }
+      if (!(ST.cfg && ST.cfg.tok && ST.cfg.cid)) { toast('Isi Token & Chat ID Telegram dulu', 'error'); return; }
+      const r = computeRecap();
+      if (!r.all.total || (!r.all.closed && !auto)) {
+        if (!auto) toast('Belum ada sinyal/hasil untuk direkap', 'info');
+        return;
+      }
+      const ok = await tgSend(recapMessage(r));
+      if (ok) {
+        AIO.stats.recaps++; savePersist(); refreshCounters();
+        setStatus('boss', 'work', '✅ Rekap terkirim ke Telegram Bos');
+        try { addChatLog('sys', '[AI OFFICE] 👔 Rekap bos terkirim ke Telegram'); } catch (e) {}
+        setTimeout(() => setStatus('boss', 'work', 'Mengawasi performa & menyiapkan rekap…'), 3000);
+      } else if (!auto) toast('Gagal kirim rekap — cek koneksi', 'error');
+    } catch (e) { console.warn('sendRecap:', e); }
+  };
+
+  // ── FALLBACK 2D ───────────────────────────────────────
+  function activateFallback(reason) {
+    const lbl = $('aio-engine-lbl'); if (lbl) lbl.textContent = 'mode 2D (' + reason + ')';
+    const wrap = $('aio-3d-wrap'); if (wrap) wrap.style.display = 'none';
+    const fb = $('aio-fallback'); if (!fb) return;
+    fb.style.display = 'block';
+    const agents = [
+      ['📈 Alex · AI Analyst', 'var(--blue)', 'trader', '📈'],
+      ['📤 Rio · AI Sender', 'var(--green)', 'sender', '✈'],
+      ['👔 Yors · The Boss', 'var(--gold)', 'boss', '👑']
+    ];
+    fb.innerHTML = '<div style="font-size:11px;color:var(--text3);margin-bottom:10px">Mode 3D tidak tersedia (' + reason + ') — menampilkan denah 2D kantor. Semua status &amp; rekap tetap berfungsi.</div>' +
+      agents.map(a => '<div class="aio-fb-agent"><div class="aio-fb-ava" style="background:var(--bg3);border:1px solid ' + a[1] + '">' + a[3] + '</div>' +
+        '<div style="flex:1"><div style="font-weight:700;font-size:13px">' + a[0] + '</div>' +
+        '<div class="aio-status" id="aio-status-' + a[2] + '"><span class="aio-dot idle"></span>Siap…</div></div></div>').join('');
+    AIO.ready = true;
+  }
+
+  // ── INIT ──────────────────────────────────────────────
+  function init() {
+    loadPersist();
+    const lbl = $('aio-engine-lbl');
+    loadThree(function (ok) {
+      if (!ok) return activateFallback('pustaka 3D gagal dimuat');
+      try {
+        buildScene();
+        bindCamControls();
+        AIO.mode3d = true; AIO.ready = true;
+        if (lbl) lbl.textContent = 'WebGL 3D · Three.js';
+        setStatus('trader', 'idle', 'Menunggu data pasar…');
+        setStatus('sender', 'idle', 'Siap mengirim ke bot Telegram…');
+        setStatus('boss', 'idle', 'Menunggu hasil trade untuk direkap…');
+        AIO.raf = requestAnimationFrame(animate);
+      } catch (e) {
+        console.warn('AI Office 3D gagal:', e);
+        activateFallback('WebGL tidak didukung');
+      }
+    });
+    // watchdog: resume loop saat tab dibuka lagi
+    AIO.watchdog = setInterval(function () {
+      if (tabActive() && !AIO.raf && AIO.mode3d) AIO.raf = requestAnimationFrame(animate);
+      if (tabActive() && Date.now() - AIO.lastRecapUpd > 5000) {
+        AIO.lastRecapUpd = Date.now(); renderRecapGrid();
+        // sinkron status trader dengan kondisi engine
+        if (ST && ST.running && AIO.agents.trader && AIO.agents.trader.mode === 'idle') {
+          AIO.agents.trader.mode = 'work';
+          setStatus('trader', 'work', 'Menganalisa M1–H4… harga ' + (ST.price ? '$' + ST.price.toFixed(2) : '…'));
+          setStatus('sender', 'work', 'Siap mengirim ke bot Telegram…');
+          setStatus('boss', 'work', 'Mengawasi performa & menyiapkan rekap…');
+        }
+      }
+    }, 1000);
+  }
+
+  // ── HOOKS ADITIF (perilaku asli selalu dijalankan dulu) ──
+  function wrapFn(name, after) {
+    const orig = window[name];
+    if (typeof orig !== 'function') return;
+    window[name] = function () {
+      const r = orig.apply(this, arguments);
+      try { after(r, arguments); } catch (e) { console.warn('AIO hook ' + name + ':', e); }
+      return r;
+    };
+  }
+  wrapFn('addLog', function (_r, args) { traderEvent(args[0]); });
+  wrapFn('sendTelegramSignal', function (r) {
+    if (r && typeof r.then === 'function') r.then(ok => senderEvent('Sinyal utama', !!ok));
+  });
+  wrapFn('sendTelegramScalp', function (r, args) {
+    if (r && typeof r.then === 'function') r.then(ok => senderEvent('Scalp ' + (args[1] || ''), !!ok));
+  });
+  wrapFn('setOutcome', function (_r, args) { bossEvent(args[1]); });
+
+  // init awal bila tab dibuka tanpa klik (mis. restore state) — aman dipanggil berkali
+  loadPersist(); refreshCounters();
+  console.log('🤖 AI Office module v1.0 siap — 3 agen: Alex (analisa), Rio (kirim TG), Bos Yors (rekap)');
+})();
 </script>
 </body>
 </html>

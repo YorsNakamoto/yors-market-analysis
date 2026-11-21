@@ -1,8 +1,8 @@
-# 📊 Yors Market Analysis v5 — XAU/USD
+# 📊 Yors Market Analysis v5.1 — BTC/USD
 
-Alat analisa trading XAU/USD (Gold) satu-file HTML: real-time WebSocket, mesin scoring
-konfluensi multi-timeframe, ICT/SMC, kalender ekonomi + news blackout, circuit breaker,
-backtest replay + kalibrasi probabilitas, jurnal belajar adaptif, dan bot Telegram 2-arah.
+Alat analisa trading BTC/USD (Bitcoin) satu-file HTML: real-time WebSocket, mesin scoring
+konfluensi multi-timeframe (M1, M5, M15, H1, H4, D1, W1), ICT/SMC, kalender ekonomi & crypto events, circuit breaker,
+backtest replay + kalibrasi probabilitas, jurnal belajar adaptif, AI Office kantor 3D agen, dan bot Telegram 2-arah.
 
 **Buka `index.html`** — isi API key sendiri di halaman setup (semua data tersimpan lokal
 di browser Anda, tidak dikirim ke server mana pun).
@@ -29,5 +29,5 @@ di browser Anda, tidak dikirim ke server mana pun).
 Folder ini siap deploy — `index.html` statis murni, tanpa build step.
 
 ## ⚠️ Disclaimer
-Untuk edukasi dan referensi analisa. Bukan saran investasi. Trading gold/forex berisiko
+Untuk edukasi dan referensi analisa. Bukan saran investasi. Trading cryptocurrency/bitcoin berisiko
 tinggi kehilangan modal. Uji dulu di virtual/paper trade, dan selalu pakai manajemen risiko.
