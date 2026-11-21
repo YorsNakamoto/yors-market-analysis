@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📊 Yors Market Analysis v5.1 — BTC/USD</title>
+<title>📊 Yors Market Analysis v5.1 — Bitcoin (BTC/USD)</title>
 <style>
   :root {
     --bg: #0a0d12;
@@ -437,9 +437,9 @@
 <!-- TOP BAR -->
 <div class="topbar" id="topbar" style="display:none;border-bottom:1px solid var(--border);box-shadow:0 1px 0 rgba(251,191,36,.2)">
   <div class="topbar-left">
-    <div class="topbar-title">📊 Yors Market Analysis</div>
+    <div class="topbar-title">📊 Yors Market Analysis <span style="font-size:12px;color:#f7931a;font-weight:700;margin-left:4px">· Bitcoin</span></div>
     <div style="display:flex;gap:2px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:2px;margin-left:8px" id="pair-tabs">
-      <button class="pair-tab active" id="pt-BTCUSD" onclick="switchPair('BTC/USD')">₿ BTC/USD</button>
+      <button class="pair-tab active" id="pt-BTCUSD" onclick="switchPair('BTC/USD')">₿ Bitcoin (BTC/USD)</button>
     </div>
     <div class="flex gap8" style="margin-left:10px">
       <div class="status-dot status-load" id="s-dot"></div>
@@ -468,8 +468,8 @@
 <div id="setup">
   <div class="setup-hero">
     <div class="setup-hero-icon">📊</div>
-    <h1>Yors Market Analysis</h1>
-    <p>Bitcoin Analysis · BTC/USD · Real-Time Prices</p>
+    <h1>Yors Market Analysis — Bitcoin</h1>
+    <p>Real-Time Technical &amp; Quantitative Engine · Bitcoin (BTC/USD)</p>
     <div id="saved-notice" style="display:none;margin-top:10px;background:var(--greenBg);border:1px solid var(--green2);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--green)">
       ✅ Konfigurasi tersimpan ditemukan — field sudah diisi otomatis
     </div>
@@ -640,7 +640,7 @@
     <!-- Chart Toolbar -->
     <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid var(--border2);flex-wrap:wrap;gap:8px">
       <div style="display:flex;align-items:center;gap:12px">
-        <span style="font-weight:700;font-size:15px;color:#e6edf3" id="price-card-pair-lbl">₿ BTC/USD</span>
+        <span style="font-weight:700;font-size:15px;color:#e6edf3" id="price-card-pair-lbl">₿ Bitcoin (BTC/USD)</span>
         <div class="price-big" id="c-price" style="font-size:26px;transition:color .15s">$0.00</div>
         <div id="p-change" style="font-size:13px;font-weight:600">—</div>
         <div style="display:flex;gap:10px;font-size:12px;color:#8b949e">
@@ -709,7 +709,7 @@
       </div>
       <div id="all-pairs-prices" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
         <div class="pair-price-box active-pair" id="pp-BTCUSD" onclick="switchPair('BTC/USD')" title="Klik untuk analisa BTC/USD">
-          <div style="font-size:10px;color:#f7931a;font-weight:600">₿ BTC/USD</div>
+          <div style="font-size:10px;color:#f7931a;font-weight:600">₿ Bitcoin (BTC/USD)</div>
           <div style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums" id="pp-p-BTCUSD">—</div>
           <div style="font-size:10px" id="pp-c-BTCUSD">—</div>
           <div id="pp-sig-BTCUSD" style="font-size:10px;margin-top:2px;font-weight:600;color:var(--text3)">—</div>
@@ -723,7 +723,7 @@
       <!-- Signal Card -->
       <div class="card" id="sig-card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <div class="card-title" style="margin:0">Signal Utama — <span id="sig-pair-lbl" style="color:var(--gold)">BTC/USD</span></div>
+          <div class="card-title" style="margin:0">Signal Utama — <span id="sig-pair-lbl" style="color:#f7931a">Bitcoin (BTC/USD)</span></div>
           <div style="display:flex;gap:6px;align-items:center">
             <span id="sig-time" style="font-size:10px;color:var(--text3)">—</span>
             <span id="sig-tg-sent" class="badge badge-gold" style="display:none;font-size:10px">📱 Sent</span>
@@ -867,7 +867,7 @@
 
     <!-- Multi-TF Table (original) -->
     <div class="card mb16">
-      <div class="card-title">Analisa Multi-Timeframe — <span id="chart-pair-label">₿ BTC/USD</span> · M1 · M5 · M15 · H1 · H4</div>
+      <div class="card-title">Analisa Multi-Timeframe — <span id="chart-pair-label">₿ Bitcoin (BTC/USD)</span> · M1 · M5 · M15 · H1 · H4</div>
       <div style="overflow-x:auto">
       <table class="data-table" style="min-width:780px">
         <thead><tr><th>TF</th><th>Trend</th><th>EMA</th><th>RSI</th><th>MACD</th><th>Stoch</th><th>BB</th><th>ADX</th><th>ICT Zone</th><th>Signal</th></tr></thead>
@@ -1154,7 +1154,7 @@
         </span>
       </div>
       <div id="aio-3d-wrap">
-        <div id="aio-3d-badge">YORS AI TRADING FIRM · 3 AGEN AKTIF</div>
+        <div id="aio-3d-badge">YORS AI BITCOIN TRADING DESK · 3 AGEN AKTIF</div>
         <div id="aio-3d-hint">🖱️ drag = putar kamera · scroll = zoom · klik kartu agen = fokus</div>
       </div>
       <div id="aio-fallback" style="display:none"></div>
@@ -6466,11 +6466,12 @@ function switchPair(key) {
   const topbar = document.querySelector('.topbar');
   if (topbar) topbar.style.borderBottomColor = cfg.col;
 
+  const pairDisplayName = cfg.name ? cfg.name + ' (' + key + ')' : key;
   const els = {
-    'chart-pair-label': cfg.emoji + ' ' + key,
-    'pair-desc-label':  key + ' · ' + cfg.name,
-    'price-card-pair-lbl': cfg.emoji + ' ' + key,
-    'sig-pair-lbl': key
+    'chart-pair-label': cfg.emoji + ' ' + pairDisplayName,
+    'pair-desc-label':  pairDisplayName,
+    'price-card-pair-lbl': cfg.emoji + ' ' + pairDisplayName,
+    'sig-pair-lbl': pairDisplayName
   };
   Object.entries(els).forEach(([id, txt]) => {
     const el = $(id);
