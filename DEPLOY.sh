@@ -17,7 +17,7 @@ set -e
 export PATH="$HOME/bin:$PATH"
 GH="$(command -v gh || echo "$HOME/bin/gh")"
 DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO="yors-market-analysis"
+REPO="yors-bitcoin-analysis"
 
 echo "═══ Yors Market Analysis v5 — Deploy ═══"
 
